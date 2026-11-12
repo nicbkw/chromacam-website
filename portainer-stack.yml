@@ -1,0 +1,33 @@
+version: '3.8'
+
+# Portainer Stack Definition for chromacam.art
+# Designed for Portainer (portainer.remon.uk) + Nginx Proxy Manager (npm.remon.uk)
+#
+# Deployment Instructions:
+# 1. Open Portainer (portainer.remon.uk) -> Stacks -> Add Stack
+# 2. Name: chromacam-art
+# 3. Select "Repository" (Repository URL: https://github.com/nicbkw/chromacam-website.git)
+#    OR paste this YAML directly into the Web Editor.
+# 4. Deploy Stack.
+# 5. Open Nginx Proxy Manager (npm.remon.uk) -> Add Proxy Host:
+#    - Domain Names: chromacam.art, www.chromacam.art
+#    - Scheme: http
+#    - Forward Hostname / IP: <your-server-ip>
+#    - Forward Port: 8080
+#    - SSL: Request a new Let's Encrypt Certificate (Force SSL enabled)
+
+services:
+  chromacam-art-website:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: chromacam-art-website:latest
+    container_name: chromacam_art_web
+    restart: always
+    ports:
+      - "8080:80"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:80"]
+      interval: 30s
+      timeout: 5s
+      retries: 3

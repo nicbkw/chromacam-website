@@ -1,0 +1,20 @@
+version: '3.8'
+
+# Docker Compose for chromacam.art
+# Designed for deployment via Portainer (portainer.remon.uk) and Nginx Proxy Manager (npm.remon.uk)
+
+services:
+  chromacam-art-website:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: chromacam-art-website:latest
+    container_name: chromacam_art_web
+    restart: always
+    ports:
+      - "8080:80"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:80"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
