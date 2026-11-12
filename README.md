@@ -36,7 +36,7 @@ To move away from trademarked brand names while maintaining authentic optical pr
    - Compose path: `docker-compose.yml`
 5. Click **Deploy the stack**.
 
-*(Alternatively, copy and paste `docker-compose.yml` directly into the Web Editor).*
+*(Note: The default host port is set to `8085`. If `8085` is in use, set an environment variable `PORT=8090` in Portainer environment variables or edit the port).*
 
 ### Step 2: Configure Proxy Host in Nginx Proxy Manager (`npm.remon.uk`)
 1. Log into Nginx Proxy Manager (`npm.remon.uk`).
@@ -45,16 +45,9 @@ To move away from trademarked brand names while maintaining authentic optical pr
    - **Domain Names**: `chromacam.art`, `www.chromacam.art`
    - **Scheme**: `http`
    - **Forward Hostname / IP**: `<your-server-ip>`
-   - **Forward Port**: `8080`
+   - **Forward Port**: `8085` (matching the host port mapped in Portainer)
    - Check: `Block Common Exploits`, `Websockets Support`
 4. **SSL Tab**:
    - Select **Request a new SSL Certificate** (Let's Encrypt).
    - Check: `Force SSL`, `HTTP/2 Support`.
    - Agree to Terms of Service & **Save**.
-
----
-
-## 🛠️ Tech Stack & Features
-- **Frontend**: Pure HTML5, Tailwind CSS, Space Grotesk & JetBrains Mono typography, custom SVG rangefinder overlays, VT323 LED date stamp.
-- **Interactive Simulator**: Dynamic stock switching, live CSS tone curve matrices, rangefinder reticle tap-and-drag, over-exposure zebra stripes, Super 8 motion flicker, and aspect ratio frame switcher.
-- **Server**: Multi-stage Nginx Alpine container (`~20MB` footprint) with Gzip compression, static asset caching, and security headers.
