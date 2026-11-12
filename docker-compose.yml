@@ -11,7 +11,7 @@ services:
     container_name: chromacam_art_web
     restart: always
     ports:
-      - "${PORT:-8085}:80"
+      - "${PORT:-8090}:80"
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:80"]
       interval: 30s

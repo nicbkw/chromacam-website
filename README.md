@@ -36,7 +36,7 @@ To move away from trademarked brand names while maintaining authentic optical pr
    - Compose path: `docker-compose.yml`
 5. Click **Deploy the stack**.
 
-*(Note: The default host port is set to `8085`. If `8085` is in use, set an environment variable `PORT=8090` in Portainer environment variables or edit the port).*
+*(Note: Host port default is `8090`).*
 
 ### Step 2: Configure Proxy Host in Nginx Proxy Manager (`npm.remon.uk`)
 1. Log into Nginx Proxy Manager (`npm.remon.uk`).
@@ -45,7 +45,7 @@ To move away from trademarked brand names while maintaining authentic optical pr
    - **Domain Names**: `chromacam.art`, `www.chromacam.art`
    - **Scheme**: `http`
    - **Forward Hostname / IP**: `<your-server-ip>`
-   - **Forward Port**: `8085` (matching the host port mapped in Portainer)
+   - **Forward Port**: `8090` (matching the host port mapped in Portainer)
    - Check: `Block Common Exploits`, `Websockets Support`
 4. **SSL Tab**:
    - Select **Request a new SSL Certificate** (Let's Encrypt).
