@@ -3,7 +3,7 @@
  */
 
 // Default Base64 SVG Sample Image Data URI
-const DEFAULT_SAMPLE_IMAGE = `data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDgwMCIgd2lkdGg9IjEyMDAiIGhlaWdodD0iODAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ic2t5IiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxZTNhOGEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI0MCUiIHN0b3AtY29sb3I9IiMzYjgyZjYiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI3NSUiIHN0b3AtY29sb3I9IiNmZGJhNzQiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZjk3MzE2Ii8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJzdW4iIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZlZjA4YSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmOTczMTYiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Im0xIiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxZTI5M2IiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMGYxNzJhIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJtMiIgeDE9IjAiIHkxPSIwIiB4Mj0iMCIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMzM0MTU1Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzFlMjkzYiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iODAwIiBmaWxsPSJ1cmwoI3NreSkiLz4KICA8Y2lyY2xlIGN4PSI4NTAiIGN5PSIzMDAiIHI9IjEzMCIgZmlsbD0idXJsKCNzdW4pIiBvcGFjaXR5PSIwLjk1Ii8+CiAgPHBvbHlnb24gcG9pbnRzPSIwLDgwMCAyODAsNDIwIDYwMCw4MDAiIGZpbGw9InVybCgjbTIpIi8+CiAgPHBvbHlnb24gcG9pbnRzPSIzMjAsODAwIDc1MCwzNTAgMTE1MCw4MDAiIGZpbGw9InVybCgjbTEpIi8+CiAgPHBvbHlnb24gcG9pbnRzPSI2ODAsODAwIDk2MCw0NTAgMTIwMCw4MDAiIGZpbGw9InVybCgjbTIpIi8+CiAgPGVsbGlwc2UgY3g9IjYwMCIgY3k9IjY1MCIgcj0iMjYwIiByeT0iMzUiIGZpbGw9IiMwZjE3MmEiIG9wYWNpdHk9IjAuODUiLz4KICA8Y2lyY2xlIGN4PSI1ODAiIGN5PSI1NjAiIHI9IjQwIiBmaWxsPSIjMDkwYTBmIi8+CiAgPHBhdGggZD0iTTUxMCA4MDAgQzUxMCA2NjAsIDY1MCA2NjAsIDY1MCA4MDAgWiIgZmlsbD0iIzA5MGEwZiIvPgogIDxyZWN0IHg9IjUzNSIgeT0iNjcwIiB3aWR0aD0iOTAiIGhlaWdodD0iNjAiIHJ4PSI4IiBmaWxsPSIjMWUyOTNiIi8+CiAgPGNpcmNsZSBjeD0iODUwIiBjeT0iMzAwIiByPSIyNDAiIGZpbGw9IiNmZjlmMGEiIG9wYWNpdHk9IjAuMTUiLz4KPC9zdmc+`;
+const DEFAULT_SAMPLE_IMAGE = `data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDgwMCIgd2lkdGg9IjEyMDAiIGhlaWdodD0iODAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ic2t5IiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxZTNhOGEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI0MCUiIHN0b3AtY29sb3I9IiMzYjgyZjYiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI3NSUiIHN0b3AtY29sb3I9IiNmZGJhNzQiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZjk3MzE2Ii8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJzdW4iIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZlZjA4YSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmOTczMTYiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Im0xIiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxZTI5M2IiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMGYxNzJhIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJtMiIgeDE9IjAiIHkxPSIwIiB4Mj0iMCIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMzM0MTU1Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzFlMjkzYiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iODAwIiBmaWxsPSJ1cmwoI3NreSkiLz4KICA8Y2lyY2xlIGN4PSI4NTAiIGN5PSIzMDAiIHI9IjEzMCIgZmlsbD0idXJsKCNzdW4pIiBvcGFjaXR5PSIwLjk1Ii8+CiAgPHBvbHlnb24gcG9pbnRzPSIwLDgwMCAyODAsNDIwIDYwMCw8MDAiIGZpbGw9InVybCgjbTIpIi8+CiAgPHBvbHlnb24gcG9pbnRzPSIzMjAsODAwIDc1MCwzNTAgMTE1MCw4MDAiIGZpbGw9InVybCgjbTEpIi8+CiAgPHBvbHlnb24gcG9pbnRzPSI2ODAsODAwIDk2MCw0NTAgMTIwMCw4MDAiIGZpbGw9InVybCgjbTIpIi8+CiAgPGVsbGlwc2UgY3g9IjYwMCIgY3k9IjY1MCIgcj0iMjYwIiByeT0iMzUiIGZpbGw9IiMwZjE3MmEiIG9wYWNpdHk9IjAuODUiLz4KICA8Y2lyY2xlIGN4PSI1ODAiIGN5PSI1NjAiIHI9IjQwIiBmaWxsPSIjMDkwYTBmIi8+CiAgPHBhdGggZD0iTTUxMCA4MDAgQzUxMCA2NjAsIDY1MCA2NjAsIDY1MCA8MDAgWiIgZmlsbD0iIzA5MGEwZiIvPgogIDxyZWN0IHg9IjUzNSIgeT0iNjcwIiB3aWR0aD0iOTAiIGhlaWdodD0iNjAiIHJ4PSI4IiBmaWxsPSIjMWUyOTNiIi8+CiAgPGNpcmNsZSBjeD0iODUwIiBjeT0iMzAwIiByPSIyNDAiIGZpbGw9IiNmZjlmMGEiIG9wYWNpdHk9IjAuMTUiLz4KPC9zdmc+`;
 
 // 12 Representative Non-Branded Film Stocks Data
 const filmStocksData = [
@@ -203,6 +203,7 @@ function setImageSources(src) {
     const el = document.getElementById(id);
     if (el) {
       el.src = src;
+      el.removeAttribute('srcset');
       el.style.display = 'block';
     }
   });
@@ -211,18 +212,13 @@ function setImageSources(src) {
 // Image File Importer (Upload + Drag & Drop)
 function initImageImporter() {
   const fileInput = document.getElementById('photo-upload-input');
-  const importBtn = document.getElementById('btn-import-photo');
   const container = document.getElementById('viewfinder-container');
 
-  if (importBtn && fileInput) {
-    importBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      fileInput.value = null; // Reset value so selecting same file fires change
-      fileInput.click();
-    });
-  }
-
   if (fileInput) {
+    fileInput.addEventListener('click', (e) => {
+      e.target.value = null; // Clear value so re-selecting same file fires change
+    });
+
     fileInput.addEventListener('change', (e) => {
       const file = e.target.files && e.target.files[0];
       if (file) handleImageFile(file);
@@ -247,9 +243,12 @@ function initImageImporter() {
     });
 
     container.addEventListener('drop', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      container.classList.remove('ring-4', 'ring-amber-500');
       const dt = e.dataTransfer;
-      const file = dt.files && dt.files[0];
-      if (file && file.type.startsWith('image/')) {
+      const file = dt && dt.files && dt.files[0];
+      if (file) {
         handleImageFile(file);
       }
     });
@@ -258,18 +257,23 @@ function initImageImporter() {
 
 // Process imported file
 function handleImageFile(file) {
-  if (!file || !file.type.startsWith('image/')) return;
+  if (!file) return;
 
   const reader = new FileReader();
   reader.onload = (e) => {
-    const resultSrc = e.target.result;
-    setImageSources(resultSrc);
+    const resultSrc = e.target && e.target.result;
+    if (resultSrc) {
+      setImageSources(resultSrc);
 
-    const statusTag = document.getElementById('import-status-tag');
-    if (statusTag) {
-      statusTag.textContent = `✓ Photo: ${file.name.length > 18 ? file.name.substring(0, 15) + '...' : file.name}`;
-      statusTag.classList.remove('hidden');
+      const statusTag = document.getElementById('import-status-tag');
+      if (statusTag) {
+        statusTag.textContent = `✓ Photo: ${file.name && file.name.length > 18 ? file.name.substring(0, 15) + '...' : (file.name || 'Custom Image')}`;
+        statusTag.classList.remove('hidden');
+      }
     }
+  };
+  reader.onerror = (err) => {
+    console.error('Error reading image file:', err);
   };
   reader.readAsDataURL(file);
 }

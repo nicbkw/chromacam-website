@@ -67,10 +67,10 @@
           ChromaCam delivers 12 authentic 35mm film stock emulations, rangefinder focus precision, quartz LED date stamps, and procedural light leaks—powered by a shared C++20 optical engine. Import your own photo below to test original vs film emulation side-by-side.
         </p>
         <div class="flex flex-wrap items-center justify-center gap-4">
-          <a href="#comparison" class="btn-primary">
+          <label for="photo-upload-input" class="btn-primary cursor-pointer">
             <span>Import Your Photo & Compare</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-          </a>
+          </label>
           <a href="#emulations" class="btn-secondary">
             <span>Explore 12 Film Stocks</span>
           </a>
@@ -86,12 +86,12 @@
             
             <!-- Image Import Controls -->
             <div class="flex items-center gap-3">
-              <button type="button" id="btn-import-photo" onclick="document.getElementById('photo-upload-input').click()" class="cursor-pointer bg-amber-500 hover:bg-amber-400 text-black font-bold px-3.5 py-1.5 rounded-lg flex items-center gap-2 transition-colors">
+              <label for="photo-upload-input" class="cursor-pointer bg-amber-500 hover:bg-amber-400 text-black font-bold px-3.5 py-1.5 rounded-lg flex items-center gap-2 transition-colors select-none">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
                 <span>Import Photo</span>
-              </button>
-              <input type="file" id="photo-upload-input" accept="image/*" class="hidden" onclick="this.value=null">
-              <button id="btn-reset-photo" onclick="resetSamplePhoto()" class="px-3 py-1.5 rounded-lg border border-gray-700 text-gray-400 hover:text-white hover:border-gray-500 transition-colors">
+              </label>
+              <input type="file" id="photo-upload-input" accept="image/*" class="sr-only">
+              <button type="button" id="btn-reset-photo" onclick="resetSamplePhoto()" class="px-3 py-1.5 rounded-lg border border-gray-700 text-gray-400 hover:text-white hover:border-gray-500 transition-colors">
                 Reset Sample
               </button>
               <span id="import-status-tag" class="text-emerald-400 hidden sm:inline-block">✓ Sample Photo Loaded</span>
@@ -99,10 +99,10 @@
 
             <!-- View Mode Switcher -->
             <div class="flex items-center gap-2 bg-[#090a0f] p-1 rounded-lg border border-gray-800">
-              <button id="btn-mode-side" onclick="setViewMode('side-by-side')" class="mode-btn px-2.5 py-1 rounded text-amber-400 bg-amber-500/10 font-semibold border border-amber-500/30">
+              <button type="button" id="btn-mode-side" onclick="setViewMode('side-by-side')" class="mode-btn px-2.5 py-1 rounded text-amber-400 bg-amber-500/10 font-semibold border border-amber-500/30">
                 Side-by-Side
               </button>
-              <button id="btn-mode-split" onclick="setViewMode('split-slider')" class="mode-btn px-2.5 py-1 rounded text-gray-400 hover:text-white">
+              <button type="button" id="btn-mode-split" onclick="setViewMode('split-slider')" class="mode-btn px-2.5 py-1 rounded text-gray-400 hover:text-white">
                 Split Slider
               </button>
             </div>
@@ -120,14 +120,14 @@
 
             <div class="flex items-center gap-2">
               <div class="flex items-center gap-1.5 text-xs">
-                <button onclick="setAspectRatio('3:2')" class="aspect-btn px-2 py-0.5 rounded border border-amber-500 text-amber-500 bg-amber-500/10" data-aspect="3:2">3:2</button>
-                <button onclick="setAspectRatio('4:5')" class="aspect-btn px-2 py-0.5 rounded border border-gray-700 text-gray-400 hover:text-white" data-aspect="4:5">4:5</button>
-                <button onclick="setAspectRatio('9:16')" class="aspect-btn px-2 py-0.5 rounded border border-gray-700 text-gray-400 hover:text-white" data-aspect="9:16">9:16</button>
-                <button onclick="setAspectRatio('1:1')" class="aspect-btn px-2 py-0.5 rounded border border-gray-700 text-gray-400 hover:text-white" data-aspect="1:1">1:1</button>
+                <button type="button" onclick="setAspectRatio('3:2')" class="aspect-btn px-2 py-0.5 rounded border border-amber-500 text-amber-500 bg-amber-500/10" data-aspect="3:2">3:2</button>
+                <button type="button" onclick="setAspectRatio('4:5')" class="aspect-btn px-2 py-0.5 rounded border border-gray-700 text-gray-400 hover:text-white" data-aspect="4:5">4:5</button>
+                <button type="button" onclick="setAspectRatio('9:16')" class="aspect-btn px-2 py-0.5 rounded border border-gray-700 text-gray-400 hover:text-white" data-aspect="9:16">9:16</button>
+                <button type="button" onclick="setAspectRatio('1:1')" class="aspect-btn px-2 py-0.5 rounded border border-gray-700 text-gray-400 hover:text-white" data-aspect="1:1">1:1</button>
               </div>
-              <button id="btn-toggle-zebra" onclick="toggleZebra()" class="px-2 py-0.5 rounded border border-gray-700 text-gray-300 hover:border-amber-500 transition-colors">ZEBRA</button>
-              <button id="btn-toggle-leak" onclick="toggleLeak()" class="px-2 py-0.5 rounded border border-gray-700 text-gray-300 hover:border-amber-500 transition-colors">LEAK</button>
-              <button id="btn-toggle-date" onclick="toggleDate()" class="px-2 py-0.5 rounded border border-gray-700 text-amber-400 bg-amber-500/10 hover:border-amber-500 transition-colors">'98 DATE</button>
+              <button type="button" id="btn-toggle-zebra" onclick="toggleZebra()" class="px-2 py-0.5 rounded border border-gray-700 text-gray-300 hover:border-amber-500 transition-colors">ZEBRA</button>
+              <button type="button" id="btn-toggle-leak" onclick="toggleLeak()" class="px-2 py-0.5 rounded border border-gray-700 text-gray-300 hover:border-amber-500 transition-colors">LEAK</button>
+              <button type="button" id="btn-toggle-date" onclick="toggleDate()" class="px-2 py-0.5 rounded border border-gray-700 text-amber-400 bg-amber-500/10 hover:border-amber-500 transition-colors">'98 DATE</button>
             </div>
           </div>
 
@@ -235,12 +235,12 @@
 
         <!-- Category Tabs -->
         <div class="flex flex-wrap items-center justify-center gap-2">
-          <button class="filter-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-amber-500 text-black" data-category="all">All Emulations (12)</button>
-          <button class="filter-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-gray-800 text-gray-300 hover:bg-gray-700" data-category="free">Free Core (3)</button>
-          <button class="filter-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-gray-800 text-gray-300 hover:bg-gray-700" data-category="pro">ChromaCam PRO+ (9)</button>
-          <button class="filter-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-gray-800 text-gray-300 hover:bg-gray-700" data-category="color_negative">Color Negative</button>
-          <button class="filter-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-gray-800 text-gray-300 hover:bg-gray-700" data-category="slide_reversal">Slide Reversal</button>
-          <button class="filter-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-gray-800 text-gray-300 hover:bg-gray-700" data-category="monochrome">Monochrome</button>
+          <button type="button" class="filter-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-amber-500 text-black" data-category="all">All Emulations (12)</button>
+          <button type="button" class="filter-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-gray-800 text-gray-300 hover:bg-gray-700" data-category="free">Free Core (3)</button>
+          <button type="button" class="filter-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-gray-800 text-gray-300 hover:bg-gray-700" data-category="pro">ChromaCam PRO+ (9)</button>
+          <button type="button" class="filter-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-gray-800 text-gray-300 hover:bg-gray-700" data-category="color_negative">Color Negative</button>
+          <button type="button" class="filter-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-gray-800 text-gray-300 hover:bg-gray-700" data-category="slide_reversal">Slide Reversal</button>
+          <button type="button" class="filter-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-gray-800 text-gray-300 hover:bg-gray-700" data-category="monochrome">Monochrome</button>
         </div>
       </div>
 
