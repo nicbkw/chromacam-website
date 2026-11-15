@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ChromaCam.art — Authentic Analog Film Emulation Engine</title>
-  <meta name="description" content="ChromaCam is an analog film emulation camera app for iOS & Android powered by a C++20 optical color engine. 12 non-branded film stock profiles, 35mm rangefinder focus, quartz date stamp, light leaks, and real-time side-by-side photo comparison.">
+  <meta name="description" content="ChromaCam is an analog film emulation camera app for iOS & Android powered by a C++20 optical color engine. 12 non-branded film stock profiles, 35mm rangefinder focus, quartz date stamp, light leaks, and real-time split-slider photo comparison.">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="css/styles.css">
   <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23090a0f' stroke='%23ff9f0a' stroke-width='6'/%3E%3Ccircle cx='50' cy='50' r='18' fill='%23ff9f0a'/%3E%3Cpath d='M50 5 L50 20 M50 80 L50 95 M5 50 L20 50 M80 50 L95 50' stroke='%23ff9f0a' stroke-width='6'/%3E%3C/svg%3E">
@@ -34,7 +34,7 @@
 
       <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
         <a href="#emulations" class="hover:text-amber-400 transition-colors">Film Emulations</a>
-        <a href="#comparison" class="hover:text-amber-400 transition-colors">Side-by-Side Compare</a>
+        <a href="#comparison" class="hover:text-amber-400 transition-colors">Split Slider Studio</a>
         <a href="#viewfinder" class="hover:text-amber-400 transition-colors">Viewfinder & PRO</a>
         <a href="#darkroom" class="hover:text-amber-400 transition-colors">Darkroom</a>
         <a href="#pricing" class="hover:text-amber-400 transition-colors">Pricing</a>
@@ -64,7 +64,7 @@
           <span class="text-gradient-amber">Reimagined for Mobile.</span>
         </h1>
         <p class="text-lg sm:text-xl text-gray-300 leading-relaxed mb-8">
-          ChromaCam delivers 12 authentic 35mm film stock emulations, rangefinder focus precision, quartz LED date stamps, and procedural light leaks—powered by a shared C++20 optical engine. Import your own photo below to test original vs film emulation side-by-side.
+          ChromaCam delivers 12 authentic 35mm film stock emulations, rangefinder focus precision, quartz LED date stamps, and procedural light leaks—powered by a shared C++20 optical engine. Import your own photo below to test original vs film emulation with the interactive split slider.
         </p>
         <div class="flex flex-wrap items-center justify-center gap-4">
           <label for="photo-upload-input" class="btn-primary cursor-pointer select-none">
@@ -97,25 +97,7 @@
               <span id="import-status-tag" class="text-emerald-400 hidden sm:inline-block">✓ Sample Photo Loaded</span>
             </div>
 
-            <!-- View Mode Switcher -->
-            <div class="flex items-center gap-2 bg-[#090a0f] p-1 rounded-lg border border-gray-800">
-              <button type="button" id="btn-mode-side" onclick="setViewMode('side-by-side')" class="mode-btn px-2.5 py-1 rounded text-amber-400 bg-amber-500/10 font-semibold border border-amber-500/30">
-                Side-by-Side
-              </button>
-              <button type="button" id="btn-mode-split" onclick="setViewMode('split-slider')" class="mode-btn px-2.5 py-1 rounded text-gray-400 hover:text-white">
-                Split Slider
-              </button>
-            </div>
-          </div>
-
-          <!-- Secondary Viewfinder & Effect Controls Bar -->
-          <div class="flex flex-wrap items-center justify-between gap-3 mb-4 text-xs font-mono text-gray-400">
-            <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
-              <span class="text-amber-500 font-bold" id="vf-stock-name">Amber Gold 200</span>
-              <span class="px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/30" id="vf-iso">ISO 200</span>
-            </div>
-
+            <!-- Effect Controls Bar -->
             <div class="flex items-center gap-2">
               <div class="flex items-center gap-1.5 text-xs">
                 <button type="button" onclick="setAspectRatio('3:2')" class="aspect-btn px-2 py-0.5 rounded border border-amber-500 text-amber-500 bg-amber-500/10" data-aspect="3:2">3:2</button>
@@ -123,37 +105,27 @@
                 <button type="button" onclick="setAspectRatio('9:16')" class="aspect-btn px-2 py-0.5 rounded border border-gray-700 text-gray-400 hover:text-white" data-aspect="9:16">9:16</button>
                 <button type="button" onclick="setAspectRatio('1:1')" class="aspect-btn px-2 py-0.5 rounded border border-gray-700 text-gray-400 hover:text-white" data-aspect="1:1">1:1</button>
               </div>
-              <button type="button" id="btn-toggle-zebra" onclick="toggleZebra()" class="px-2 py-0.5 rounded border border-gray-700 text-gray-300 hover:border-amber-500 transition-colors">ZEBRA</button>
               <button type="button" id="btn-toggle-leak" onclick="toggleLeak()" class="px-2 py-0.5 rounded border border-gray-700 text-gray-300 hover:border-amber-500 transition-colors">LEAK</button>
               <button type="button" id="btn-toggle-date" onclick="toggleDate()" class="px-2 py-0.5 rounded border border-gray-700 text-amber-400 bg-amber-500/10 hover:border-amber-500 transition-colors">'98 DATE</button>
             </div>
           </div>
 
-          <!-- COMPARISON DISPLAY CONTAINER -->
-          <div id="viewfinder-container" class="viewfinder-box relative mb-4 cursor-crosshair select-none">
+          <!-- Active Film Stock Banner -->
+          <div class="flex items-center justify-between mb-4 text-xs font-mono text-gray-400">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
+              <span class="text-amber-500 font-bold" id="vf-stock-name">Amber Gold 200</span>
+              <span class="px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/30" id="vf-iso">ISO 200</span>
+            </div>
+            <span class="text-gray-400 text-[11px] hidden sm:inline">DRAG SLIDER TO COMPARE ORIGINAL VS EMULATION</span>
+          </div>
+
+          <!-- COMPARISON DISPLAY CONTAINER (SPLIT SLIDER STUDIO) -->
+          <div id="viewfinder-container" class="viewfinder-box relative mb-4 select-none">
             <div id="viewfinder-frame" class="viewfinder-frame-container transition-all duration-300" style="aspect-ratio: 3/2;">
               
-              <!-- 1. SIDE-BY-SIDE MODE CONTAINER -->
-              <div id="side-by-side-layout" class="side-by-side-grid-layout">
-                <!-- Left Pane: Original Image -->
-                <div class="side-by-side-pane group">
-                  <div class="absolute top-3 left-3 z-20 px-2.5 py-1 rounded bg-black/70 backdrop-blur border border-white/20 text-[10px] font-mono text-gray-200 uppercase tracking-wider">
-                    Original
-                  </div>
-                  <img id="img-original-side" class="comparison-preview-img select-none" src="" alt="Original Photo Preview">
-                </div>
-
-                <!-- Right Pane: Film Emulated Image -->
-                <div class="side-by-side-pane group">
-                  <div class="absolute top-3 right-3 z-20 px-2.5 py-1 rounded bg-amber-500/90 text-black font-bold text-[10px] font-mono uppercase tracking-wider shadow-lg" id="side-emulation-tag">
-                    Amber Gold 200
-                  </div>
-                  <img id="img-emulated-side" class="comparison-preview-img filter-amber-gold-200 transition-all duration-500 select-none" src="" alt="Film Emulation Photo Preview">
-                </div>
-              </div>
-
-              <!-- 2. SPLIT SLIDER MODE CONTAINER (Hidden by default) -->
-              <div id="split-slider-layout" class="absolute inset-0 overflow-hidden hidden">
+              <!-- SPLIT SLIDER CONTAINER -->
+              <div id="split-slider-layout" class="absolute inset-0 overflow-hidden">
                 <!-- Base Layer: Emulated Image -->
                 <img id="img-emulated-split" class="comparison-preview-img filter-amber-gold-200 transition-all duration-500 absolute inset-0 select-none" src="" alt="Film Emulation Photo Preview">
                 
@@ -179,10 +151,7 @@
                 </div>
               </div>
 
-              <!-- Shared Viewfinder Overlays -->
-              <!-- Overexposure Zebra Overlay -->
-              <div class="zebra-overlay"></div>
-
+              <!-- Shared Overlays -->
               <!-- Light Leak Overlay -->
               <div class="light-leak-effect"></div>
 
@@ -220,7 +189,7 @@
           12 Representative Film Emulations
         </h2>
         <p class="text-gray-300 text-base sm:text-lg leading-relaxed mb-6">
-          Tap any film stock below to instantly test and compare original vs emulated results in the side-by-side viewfinder above.
+          Tap any film stock below to instantly test and compare original vs emulated results with the split slider above.
         </p>
 
         <!-- Category Tabs -->
@@ -285,11 +254,11 @@
           <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-500 mb-6">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path></svg>
           </div>
-          <h3 class="text-xl font-bold text-white mb-3">PRO Manual Controls & Zebras</h3>
+          <h3 class="text-xl font-bold text-white mb-3">PRO Manual Controls</h3>
           <p class="text-gray-400 text-sm leading-relaxed mb-4">
-            Unrestricted manual override for ISO (50–3200), Shutter Speed (1/30s–1/2000s), Aperture (f/1.4–f/16), Exposure Bias (-2.0 to +2.0 EV), Grain Density (OFF–30%), and real-time live Over-Exposure Zebra Stripes (≥95% clipping detector).
+            Unrestricted manual override for ISO (50–3200), Shutter Speed (1/30s–1/2000s), Aperture (f/1.4–f/16), Exposure Bias (-2.0 to +2.0 EV), and Grain Density (OFF–30%).
           </p>
-          <span class="text-xs font-mono text-amber-500">Live Clipping Warnings</span>
+          <span class="text-xs font-mono text-amber-500">Full Manual Latitude</span>
         </div>
 
         <!-- Function 4 -->
@@ -309,9 +278,9 @@
           <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-500 mb-6">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
           </div>
-          <h3 class="text-xl font-bold text-white mb-3">Custom Photo Import & Side-by-Side</h3>
+          <h3 class="text-xl font-bold text-white mb-3">Custom Photo Import & Split Slider</h3>
           <p class="text-gray-400 text-sm leading-relaxed mb-4">
-            Import any JPEG or PNG photo directly into the web simulator to inspect before-and-after film emulations side-by-side or with interactive split slider controls, rangefinder reticles, and quartz date stamps.
+            Import any JPEG or PNG photo directly into the web simulator to inspect before-and-after film emulations with interactive split slider controls and quartz date stamps.
           </p>
           <span class="text-xs font-mono text-amber-500">`FileReader` + Live Filter Sync</span>
         </div>
@@ -368,7 +337,7 @@
           Simple Free & PRO+ Plans
         </h2>
         <p class="text-gray-300 text-lg">
-          Start for free with 3 core film stock emulations, or unlock all 12 stocks, side-by-side comparison studio, and full multi-lens focal controls with ChromaCam PRO+.
+          Start for free with 3 core film stock emulations, or unlock all 12 stocks, split slider comparison studio, and full multi-lens focal controls with ChromaCam PRO+.
         </p>
       </div>
 
@@ -407,7 +376,7 @@
             <ul class="space-y-3 text-sm text-gray-200 mb-8 font-mono">
               <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> 7-Day Free Trial</li>
               <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> All 12 Film Stocks Unlocked</li>
-              <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> Real-Time Side-by-Side Engine</li>
+              <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> Split Slider Comparison Engine</li>
               <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> Full Lens Stepping (24–85mm)</li>
               <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> Darkroom Restyling & EXIF</li>
             </ul>

@@ -168,8 +168,6 @@ const filmStocksData = [
 // Current State
 let activeStock = filmStocksData[0]; // Amber Gold 200
 let activeAspect = '3:2';
-let viewMode = 'side-by-side'; // 'side-by-side' or 'split-slider'
-let isZebraOn = false;
 let isLeakOn = false;
 let isDateOn = true;
 let currentImageSrc = DEFAULT_SAMPLE_IMAGE;
@@ -179,7 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initSampleImages();
   renderQuickStockBar();
   renderStockCards('all');
-  initViewfinderEvents();
   initCategoryFilters();
   initSplitSliderEvents();
   updateViewfinderState();
@@ -195,11 +192,11 @@ function initSampleImages() {
   setImageSources(DEFAULT_SAMPLE_IMAGE);
 }
 
-// Set Image Sources across all comparison elements
+// Set Image Sources across comparison elements
 function setImageSources(src) {
   if (!src) return;
   currentImageSrc = src;
-  const ids = ['img-original-side', 'img-emulated-side', 'img-original-split', 'img-emulated-split'];
+  const ids = ['img-original-split', 'img-emulated-split'];
   ids.forEach(id => {
     const el = document.getElementById(id);
     if (el) {
@@ -318,37 +315,6 @@ function resetSamplePhoto() {
   }
 }
 
-// View Mode Switcher ('side-by-side' vs 'split-slider')
-function setViewMode(mode) {
-  viewMode = mode;
-  const sideLayout = document.getElementById('side-by-side-layout');
-  const splitLayout = document.getElementById('split-slider-layout');
-  const btnSide = document.getElementById('btn-mode-side');
-  const btnSplit = document.getElementById('btn-mode-split');
-
-  if (mode === 'side-by-side') {
-    if (sideLayout) sideLayout.classList.remove('hidden');
-    if (splitLayout) splitLayout.classList.add('hidden');
-
-    if (btnSide) {
-      btnSide.className = 'mode-btn px-2.5 py-1 rounded text-amber-400 bg-amber-500/10 font-semibold border border-amber-500/30';
-    }
-    if (btnSplit) {
-      btnSplit.className = 'mode-btn px-2.5 py-1 rounded text-gray-400 hover:text-white';
-    }
-  } else {
-    if (sideLayout) sideLayout.classList.add('hidden');
-    if (splitLayout) splitLayout.classList.remove('hidden');
-
-    if (btnSplit) {
-      btnSplit.className = 'mode-btn px-2.5 py-1 rounded text-amber-400 bg-amber-500/10 font-semibold border border-amber-500/30';
-    }
-    if (btnSide) {
-      btnSide.className = 'mode-btn px-2.5 py-1 rounded text-gray-400 hover:text-white';
-    }
-  }
-}
-
 // Split Slider Drag Events
 function initSplitSliderEvents() {
   const container = document.getElementById('split-slider-layout');
@@ -438,7 +404,7 @@ function renderStockCards(filterCategory) {
         ${stock.descriptionNote}
       </p>
       <div class="pt-3 border-t border-gray-800 flex items-center justify-between">
-        <span class="text-xs text-amber-500 font-mono-code">Tap to compare side-by-side</span>
+        <span class="text-xs text-amber-500 font-mono-code">Tap to test on split slider</span>
         <button type="button" class="text-xs font-semibold text-amber-500 hover:text-amber-400 transition-colors flex items-center gap-1">
           Apply Tone Curve →
         </button>
@@ -508,27 +474,22 @@ function selectStock(stockId, scrollToStudio = false) {
 
 // Update Viewfinder Live State
 function updateViewfinderState() {
-  const imgEmulatedSide = document.getElementById('img-emulated-side');
   const imgEmulatedSplit = document.getElementById('img-emulated-split');
   const stockNameBadge = document.getElementById('vf-stock-name');
-  const sideTag = document.getElementById('side-emulation-tag');
   const splitTag = document.getElementById('split-emulation-tag');
   const isoBadge = document.getElementById('vf-iso');
   const descNote = document.getElementById('vf-desc-note');
   const dateStamp = document.getElementById('vf-date-stamp');
   const container = document.getElementById('viewfinder-container');
 
-  [imgEmulatedSide, imgEmulatedSplit].forEach(img => {
-    if (img) {
-      // Strip old filter classes
-      filmStocksData.forEach(s => img.classList.remove(s.filterClass));
-      // Add active filter class
-      img.classList.add(activeStock.filterClass);
-    }
-  });
+  if (imgEmulatedSplit) {
+    // Strip old filter classes
+    filmStocksData.forEach(s => imgEmulatedSplit.classList.remove(s.filterClass));
+    // Add active filter class
+    imgEmulatedSplit.classList.add(activeStock.filterClass);
+  }
   
   if (stockNameBadge) stockNameBadge.textContent = activeStock.name;
-  if (sideTag) sideTag.textContent = activeStock.name;
   if (splitTag) splitTag.textContent = activeStock.name;
   if (isoBadge) isoBadge.textContent = `ISO ${activeStock.iso}`;
   if (descNote) descNote.textContent = activeStock.descriptionNote;
@@ -542,13 +503,8 @@ function updateViewfinderState() {
   }
   
   if (container) {
-    container.className = `viewfinder-box relative transition-all duration-300 ${isZebraOn ? 'zebra-active' : ''} ${isLeakOn ? 'leak-active' : ''}`;
+    container.className = `viewfinder-box relative transition-all duration-300 ${isLeakOn ? 'leak-active' : ''}`;
   }
-}
-
-// Interactive Viewfinder Events
-function initViewfinderEvents() {
-  // Reticle and AF Lock removed from side-by-side compare
 }
 
 // Aspect Ratio Switcher
@@ -576,14 +532,6 @@ function setAspectRatio(aspect) {
 }
 
 // Toggle Viewfinder FX
-function toggleZebra() {
-  isZebraOn = !isZebraOn;
-  const btn = document.getElementById('btn-toggle-zebra');
-  if (btn) btn.classList.toggle('bg-amber-500', isZebraOn);
-  if (btn) btn.classList.toggle('text-black', isZebraOn);
-  updateViewfinderState();
-}
-
 function toggleLeak() {
   isLeakOn = !isLeakOn;
   const btn = document.getElementById('btn-toggle-leak');
