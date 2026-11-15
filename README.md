@@ -1,6 +1,6 @@
 # ChromaCam.art — Official Promo Website
 
-This repository contains the promo web application, interactive film emulator, and stack deployment configuration for **[chromacam.art](https://chromacam.art)** designed to run via **Portainer (`portainer.remon.uk`)** and **Nginx Proxy Manager (`npm.remon.uk`)**.
+This repository contains the promo web application, interactive film emulator, and container deployment configuration for **[chromacam.art](https://chromacam.art)**.
 
 ---
 
@@ -25,29 +25,13 @@ To move away from trademarked brand names while maintaining authentic optical pr
 
 ---
 
-## 🚀 Portainer & Nginx Proxy Manager (NPM) Deployment Guide
+## 🚀 Docker Deployment Guide
 
-### Step 1: Deploy Stack in Portainer (`portainer.remon.uk`)
-1. Log into Portainer (`portainer.remon.uk`).
-2. Navigate to **Stacks** → **Add Stack**.
-3. Name: `chromacam-art`.
-4. Select **Repository**:
-   - Repository URL: `https://github.com/nicbkw/chromacam-website.git`
-   - Compose path: `docker-compose.yml`
-5. Click **Deploy the stack**.
+### Run via Docker Compose
+```bash
+docker compose up -d --build
+```
+The website will be served on port `8090`.
 
-*(Note: Host port default is `8090`).*
-
-### Step 2: Configure Proxy Host in Nginx Proxy Manager (`npm.remon.uk`)
-1. Log into Nginx Proxy Manager (`npm.remon.uk`).
-2. Go to **Hosts** → **Proxy Hosts** → **Add Proxy Host**.
-3. **Details Tab**:
-   - **Domain Names**: `chromacam.art`, `www.chromacam.art`
-   - **Scheme**: `http`
-   - **Forward Hostname / IP**: `<your-server-ip>`
-   - **Forward Port**: `8090` (matching the host port mapped in Portainer)
-   - Check: `Block Common Exploits`, `Websockets Support`
-4. **SSL Tab**:
-   - Select **Request a new SSL Certificate** (Let's Encrypt).
-   - Check: `Force SSL`, `HTTP/2 Support`.
-   - Agree to Terms of Service & **Save**.
+### Configure Reverse Proxy
+Map your domain (`chromacam.art`) to container host port `8090` via your reverse proxy of choice (e.g. Nginx, Caddy, Traefik).

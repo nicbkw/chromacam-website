@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ChromaCam.art — Authentic Analog Film Emulation Engine</title>
-  <meta name="description" content="ChromaCam is an analog film emulation camera app for iOS & Android powered by a C++20 optical color engine. 12 non-branded film stock profiles, 35mm rangefinder focus, quartz date stamp, light leaks, and Super 8 motion clips.">
+  <meta name="description" content="ChromaCam is an analog film emulation camera app for iOS & Android powered by a C++20 optical color engine. 12 non-branded film stock profiles, 35mm rangefinder focus, quartz date stamp, light leaks, and real-time side-by-side photo comparison.">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="css/styles.css">
   <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23090a0f' stroke='%23ff9f0a' stroke-width='6'/%3E%3Ccircle cx='50' cy='50' r='18' fill='%23ff9f0a'/%3E%3Cpath d='M50 5 L50 20 M50 80 L50 95 M5 50 L20 50 M80 50 L95 50' stroke='%23ff9f0a' stroke-width='6'/%3E%3C/svg%3E">
@@ -34,11 +34,10 @@
 
       <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
         <a href="#emulations" class="hover:text-amber-400 transition-colors">Film Emulations</a>
+        <a href="#comparison" class="hover:text-amber-400 transition-colors">Side-by-Side Compare</a>
         <a href="#viewfinder" class="hover:text-amber-400 transition-colors">Viewfinder & PRO</a>
-        <a href="#super8" class="hover:text-amber-400 transition-colors">Super 8 & FX</a>
         <a href="#darkroom" class="hover:text-amber-400 transition-colors">Darkroom</a>
         <a href="#pricing" class="hover:text-amber-400 transition-colors">Pricing</a>
-        <a href="#deploy" class="hover:text-amber-400 font-mono text-xs text-amber-500/90 border border-amber-500/30 px-2.5 py-1 rounded-md">Portainer Stack</a>
       </div>
 
       <div class="flex items-center gap-3">
@@ -55,77 +54,134 @@
     <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-[140px] pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="text-center max-w-3xl mx-auto mb-12">
         <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono mb-6">
           <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-          <span>LIVE ON CHROMACAM.ART • 12 REPRESENTATIVE FILM STOCKS</span>
+          <span>LIVE ON CHROMACAM.ART • INTERACTIVE FILM STUDIO</span>
         </div>
         <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
           Analog Color Science.<br>
           <span class="text-gradient-amber">Reimagined for Mobile.</span>
         </h1>
         <p class="text-lg sm:text-xl text-gray-300 leading-relaxed mb-8">
-          ChromaCam delivers 12 authentic 35mm film stock emulations, rangefinder focus precision, quartz LED date stamps, procedural light leaks, and 18fps Super 8 motion clips—powered by a shared C++20 optical engine.
+          ChromaCam delivers 12 authentic 35mm film stock emulations, rangefinder focus precision, quartz LED date stamps, and procedural light leaks—powered by a shared C++20 optical engine. Import your own photo below to test original vs film emulation side-by-side.
         </p>
         <div class="flex flex-wrap items-center justify-center gap-4">
-          <a href="#emulations" class="btn-primary">
-            <span>Explore 12 Film Stocks</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          <a href="#comparison" class="btn-primary">
+            <span>Import Your Photo & Compare</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
           </a>
-          <a href="#viewfinder" class="btn-secondary">
-            <span>Try Interactive Viewfinder</span>
+          <a href="#emulations" class="btn-secondary">
+            <span>Explore 12 Film Stocks</span>
           </a>
         </div>
       </div>
 
-      <!-- INTERACTIVE VIEWFINDER HERO DEMO -->
-      <div id="viewfinder" class="max-w-4xl mx-auto">
+      <!-- INTERACTIVE COMPARISON STUDIO (HERO) -->
+      <div id="comparison" class="max-w-5xl mx-auto">
         <div class="bg-[#12141d] border border-gray-800 rounded-2xl p-4 sm:p-6 shadow-2xl relative">
-          <!-- Viewfinder Top Bar -->
-          <div class="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-gray-800 text-xs font-mono text-gray-400">
+          
+          <!-- Top Studio Toolbar & Image Importer -->
+          <div class="flex flex-wrap items-center justify-between gap-4 mb-4 pb-4 border-b border-gray-800 text-xs font-mono">
+            
+            <!-- Image Import Controls -->
+            <div class="flex items-center gap-3">
+              <label for="photo-upload-input" class="cursor-pointer bg-amber-500 hover:bg-amber-400 text-black font-bold px-3.5 py-1.5 rounded-lg flex items-center gap-2 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                <span>Import Photo</span>
+              </label>
+              <input type="file" id="photo-upload-input" accept="image/*" class="hidden">
+              <button id="btn-reset-photo" onclick="resetSamplePhoto()" class="px-3 py-1.5 rounded-lg border border-gray-700 text-gray-400 hover:text-white hover:border-gray-500 transition-colors">
+                Reset Sample
+              </button>
+              <span id="import-status-tag" class="text-emerald-400 hidden sm:inline-block">✓ Sample Photo Loaded</span>
+            </div>
+
+            <!-- View Mode Switcher -->
+            <div class="flex items-center gap-2 bg-[#090a0f] p-1 rounded-lg border border-gray-800">
+              <button id="btn-mode-side" onclick="setViewMode('side-by-side')" class="mode-btn px-2.5 py-1 rounded text-amber-400 bg-amber-500/10 font-semibold border border-amber-500/30">
+                Side-by-Side
+              </button>
+              <button id="btn-mode-split" onclick="setViewMode('split-slider')" class="mode-btn px-2.5 py-1 rounded text-gray-400 hover:text-white">
+                Split Slider
+              </button>
+            </div>
+          </div>
+
+          <!-- Secondary Viewfinder & Effect Controls Bar -->
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-4 text-xs font-mono text-gray-400">
             <div class="flex items-center gap-2">
               <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
               <span class="text-amber-500 font-bold" id="vf-stock-name">Amber Gold 200</span>
               <span class="px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/30" id="vf-iso">ISO 200</span>
+              <span class="text-gray-500 hidden sm:inline">|</span>
+              <span class="text-emerald-400 hidden sm:inline" id="vf-af-badge">AF LOCK (CENTER)</span>
             </div>
-            <div class="flex items-center gap-3">
-              <span class="text-emerald-400" id="vf-af-badge">AF LOCK (CENTER)</span>
-              <span class="text-gray-500">|</span>
-              <span class="text-gray-300 font-semibold">EV 0.0</span>
+
+            <div class="flex items-center gap-2">
+              <div class="flex items-center gap-1.5 text-xs">
+                <button onclick="setAspectRatio('3:2')" class="aspect-btn px-2 py-0.5 rounded border border-amber-500 text-amber-500 bg-amber-500/10" data-aspect="3:2">3:2</button>
+                <button onclick="setAspectRatio('4:5')" class="aspect-btn px-2 py-0.5 rounded border border-gray-700 text-gray-400 hover:text-white" data-aspect="4:5">4:5</button>
+                <button onclick="setAspectRatio('9:16')" class="aspect-btn px-2 py-0.5 rounded border border-gray-700 text-gray-400 hover:text-white" data-aspect="9:16">9:16</button>
+                <button onclick="setAspectRatio('1:1')" class="aspect-btn px-2 py-0.5 rounded border border-gray-700 text-gray-400 hover:text-white" data-aspect="1:1">1:1</button>
+              </div>
+              <button id="btn-toggle-zebra" onclick="toggleZebra()" class="px-2 py-0.5 rounded border border-gray-700 text-gray-300 hover:border-amber-500 transition-colors">ZEBRA</button>
+              <button id="btn-toggle-leak" onclick="toggleLeak()" class="px-2 py-0.5 rounded border border-gray-700 text-gray-300 hover:border-amber-500 transition-colors">LEAK</button>
+              <button id="btn-toggle-date" onclick="toggleDate()" class="px-2 py-0.5 rounded border border-gray-700 text-amber-400 bg-amber-500/10 hover:border-amber-500 transition-colors">'98 DATE</button>
             </div>
           </div>
 
-          <!-- Viewfinder Display Window -->
-          <div id="viewfinder-container" class="viewfinder-box relative mb-4 cursor-crosshair">
+          <!-- COMPARISON DISPLAY CONTAINER -->
+          <div id="viewfinder-container" class="viewfinder-box relative mb-4 cursor-crosshair select-none">
             <div id="viewfinder-frame" class="w-full relative overflow-hidden transition-all duration-300" style="aspect-ratio: 3/2;">
-              <!-- Visual Mockup Image Layer -->
-              <svg id="viewfinder-sample-img" class="w-full h-full object-cover filter-amber-gold-200 transition-all duration-500" viewBox="0 0 800 533" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stop-color="#3b82f6"/>
-                    <stop offset="60%" stop-color="#fdba74"/>
-                    <stop offset="100%" stop-color="#f97316"/>
-                  </linearGradient>
-                  <linearGradient id="mouGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stop-color="#1e293b"/>
-                    <stop offset="100%" stop-color="#0f172a"/>
-                  </linearGradient>
-                </defs>
-                <rect width="800" height="533" fill="url(#skyGrad)"/>
-                <!-- Sun Glow -->
-                <circle cx="580" cy="220" r="90" fill="#fef08a" opacity="0.85"/>
-                <!-- Mountains -->
-                <polygon points="0,533 180,300 380,533" fill="#334155"/>
-                <polygon points="220,533 480,240 720,533" fill="url(#mouGrad)"/>
-                <polygon points="500,533 650,320 800,533" fill="#1e293b"/>
-                <!-- Classic Rangefinder Subject Silhouette -->
-                <circle cx="400" cy="380" r="30" fill="#090a0f"/>
-                <path d="M350 533 C350 440, 450 440, 450 533 Z" fill="#090a0f"/>
-                <rect x="365" y="440" width="70" height="50" rx="6" fill="#1e293b"/>
-                <!-- Golden Hour Flare -->
-                <circle cx="620" cy="200" r="160" fill="#ff9f0a" opacity="0.15"/>
-              </svg>
+              
+              <!-- 1. SIDE-BY-SIDE MODE CONTAINER -->
+              <div id="side-by-side-layout" class="w-full h-full grid grid-cols-2 gap-1 bg-black">
+                <!-- Left Pane: Original Image -->
+                <div class="relative w-full h-full overflow-hidden group">
+                  <div class="absolute top-3 left-3 z-20 px-2.5 py-1 rounded bg-black/70 backdrop-blur border border-white/20 text-[10px] font-mono text-gray-200 uppercase tracking-wider">
+                    Original
+                  </div>
+                  <img id="img-original-side" class="w-full h-full object-cover select-none" src="" alt="Original Photo Preview">
+                </div>
 
+                <!-- Right Pane: Film Emulated Image -->
+                <div class="relative w-full h-full overflow-hidden group">
+                  <div class="absolute top-3 right-3 z-20 px-2.5 py-1 rounded bg-amber-500/90 text-black font-bold text-[10px] font-mono uppercase tracking-wider shadow-lg" id="side-emulation-tag">
+                    Amber Gold 200
+                  </div>
+                  <img id="img-emulated-side" class="w-full h-full object-cover filter-amber-gold-200 transition-all duration-500 select-none" src="" alt="Film Emulation Photo Preview">
+                </div>
+              </div>
+
+              <!-- 2. SPLIT SLIDER MODE CONTAINER (Hidden by default) -->
+              <div id="split-slider-layout" class="w-full h-full relative overflow-hidden hidden">
+                <!-- Base Layer: Emulated Image -->
+                <img id="img-emulated-split" class="w-full h-full object-cover filter-amber-gold-200 transition-all duration-500 absolute inset-0 select-none" src="" alt="Film Emulation Photo Preview">
+                
+                <!-- Clipped Overlay Layer: Original Image -->
+                <div id="split-clip-wrapper" class="absolute inset-0 overflow-hidden pointer-events-none" style="width: 50%;">
+                  <img id="img-original-split" class="w-full h-full object-cover select-none max-w-none" src="" alt="Original Photo Preview">
+                </div>
+
+                <!-- Split Divider Handle -->
+                <div id="split-handle" class="absolute top-0 bottom-0 z-30 cursor-ew-resize flex items-center justify-center pointer-events-auto" style="left: 50%;">
+                  <div class="w-0.5 h-full bg-amber-500 shadow-[0_0_10px_rgba(255,159,10,0.8)]"></div>
+                  <div class="absolute w-8 h-8 rounded-full bg-amber-500 text-black flex items-center justify-center shadow-lg font-bold text-xs">
+                    ↔
+                  </div>
+                </div>
+
+                <!-- Badges for Split Mode -->
+                <div class="absolute top-3 left-3 z-20 px-2.5 py-1 rounded bg-black/70 backdrop-blur border border-white/20 text-[10px] font-mono text-gray-200 uppercase tracking-wider">
+                  Original
+                </div>
+                <div class="absolute top-3 right-3 z-20 px-2.5 py-1 rounded bg-amber-500/90 text-black font-bold text-[10px] font-mono uppercase tracking-wider shadow-lg" id="split-emulation-tag">
+                  Amber Gold 200
+                </div>
+              </div>
+
+              <!-- Shared Viewfinder Overlays -->
               <!-- Rangefinder Reticle -->
               <div id="vf-reticle" class="rangefinder-reticle">
                 <div class="reticle-tick-n"></div>
@@ -145,29 +201,21 @@
             </div>
           </div>
 
-          <!-- Viewfinder Bottom Control Panel -->
-          <div class="space-y-3">
-            <div class="flex flex-wrap items-center justify-between gap-2 bg-[#090a0f] p-3 rounded-xl border border-gray-800">
-              <div class="flex items-center gap-2 text-xs font-mono">
-                <span class="text-gray-400">Aspect:</span>
-                <button onclick="setAspectRatio('3:2')" class="aspect-btn px-2.5 py-1 rounded border border-amber-500 text-amber-500 bg-amber-500/10" data-aspect="3:2">3:2</button>
-                <button onclick="setAspectRatio('4:5')" class="aspect-btn px-2.5 py-1 rounded border border-gray-700 text-gray-400 hover:text-white" data-aspect="4:5">4:5</button>
-                <button onclick="setAspectRatio('9:16')" class="aspect-btn px-2.5 py-1 rounded border border-gray-700 text-gray-400 hover:text-white" data-aspect="9:16">9:16</button>
-                <button onclick="setAspectRatio('1:1')" class="aspect-btn px-2.5 py-1 rounded border border-gray-700 text-gray-400 hover:text-white" data-aspect="1:1">1:1</button>
-              </div>
-
-              <div class="flex items-center gap-2 text-xs font-mono">
-                <button id="btn-toggle-zebra" onclick="toggleZebra()" class="px-2.5 py-1 rounded border border-gray-700 text-gray-300 hover:border-amber-500 transition-colors">ZEBRA</button>
-                <button id="btn-toggle-leak" onclick="toggleLeak()" class="px-2.5 py-1 rounded border border-gray-700 text-gray-300 hover:border-amber-500 transition-colors">LEAK</button>
-                <button id="btn-toggle-date" onclick="toggleDate()" class="px-2.5 py-1 rounded border border-gray-700 text-amber-400 bg-amber-500/10 hover:border-amber-500 transition-colors">'98 DATE</button>
-                <button id="btn-toggle-super8" onclick="toggleSuper8()" class="px-2.5 py-1 rounded border border-gray-700 text-gray-300 hover:border-amber-500 transition-colors">📹 SUPER 8</button>
-              </div>
+          <!-- QUICK FILM STOCK SELECTOR BAR -->
+          <div class="mb-4">
+            <div class="text-[11px] font-mono text-gray-400 mb-2 flex items-center justify-between">
+              <span>TAP ANY FILM STOCK TO COMPARE IN REAL-TIME:</span>
+              <span class="text-amber-500 font-semibold" id="stock-count-indicator">12 Stocks Available</span>
             </div>
-
-            <p id="vf-desc-note" class="text-xs text-gray-300 bg-amber-500/5 border border-amber-500/20 p-3 rounded-xl italic">
-              Warm, nostalgic daylight film stock with rich golden amber highlights, honey-yellow midtones, and gentle organic silver grain. Perfect for sunlit street scenes, golden hour portraits, and timeless everyday snapshots.
-            </p>
+            <div id="quick-stock-bar" class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin">
+              <!-- Rendered dynamically in app.js -->
+            </div>
           </div>
+
+          <!-- Bottom Description Note -->
+          <p id="vf-desc-note" class="text-xs text-gray-300 bg-amber-500/5 border border-amber-500/20 p-3 rounded-xl italic">
+            Warm, nostalgic daylight film stock with rich golden amber highlights, honey-yellow midtones, and gentle organic silver grain. Perfect for sunlit street scenes, golden hour portraits, and timeless everyday snapshots.
+          </p>
         </div>
       </div>
     </div>
@@ -182,7 +230,7 @@
           12 Representative Film Emulations
         </h2>
         <p class="text-gray-300 text-base sm:text-lg leading-relaxed mb-6">
-          We have transitioned away from commercial brand names to establish clear, representative nomenclature for each film stock. Every profile is meticulously calibrated around its original film category, S-curve tone response, color science matrix, and silver halide grain structure.
+          Tap any film stock below to instantly test and compare original vs emulated results in the side-by-side viewfinder above.
         </p>
 
         <!-- Category Tabs -->
@@ -266,16 +314,16 @@
           <span class="text-xs font-mono text-amber-500">24mm / 35mm / 48mm / 85mm</span>
         </div>
 
-        <!-- Function 5 -->
-        <div id="super8" class="bg-[#12141d] border border-gray-800 rounded-2xl p-8 hover:border-amber-500/40 transition-all">
+        <!-- Function 5: Custom Photo Import Engine -->
+        <div class="bg-[#12141d] border border-gray-800 rounded-2xl p-8 hover:border-amber-500/40 transition-all">
           <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-500 mb-6">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
           </div>
-          <h3 class="text-xl font-bold text-white mb-3">Super 8 Motion Clips & Artifacts</h3>
+          <h3 class="text-xl font-bold text-white mb-3">Custom Photo Import & Side-by-Side</h3>
           <p class="text-gray-400 text-sm leading-relaxed mb-4">
-            Record 18fps 2.0-second vintage Super 8 motion clips complete with projector gate weave, start/stop flash bloom, compact quartz LED date stamps ('98 DATE), and procedural film-door light leaks.
+            Import any JPEG or PNG photo directly into the web simulator to inspect before-and-after film emulations side-by-side or with interactive split slider controls, rangefinder reticles, and quartz date stamps.
           </p>
-          <span class="text-xs font-mono text-amber-500">18fps Motion Engine + MP4</span>
+          <span class="text-xs font-mono text-amber-500">`FileReader` + Live Filter Sync</span>
         </div>
 
         <!-- Function 6 -->
@@ -330,7 +378,7 @@
           Simple Free & PRO+ Plans
         </h2>
         <p class="text-gray-300 text-lg">
-          Start for free with 3 core film stock emulations, or unlock all 12 stocks, Super 8 motion clips, and full multi-lens focal controls with ChromaCam PRO+.
+          Start for free with 3 core film stock emulations, or unlock all 12 stocks, side-by-side comparison studio, and full multi-lens focal controls with ChromaCam PRO+.
         </p>
       </div>
 
@@ -346,7 +394,7 @@
             </div>
             <ul class="space-y-3 text-sm text-gray-300 mb-8 font-mono">
               <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> All 12 Film Stocks</li>
-              <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> Unlimited Super 8 Motion Clips</li>
+              <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> Unlimited Custom Photo Import</li>
               <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> 24mm/35mm/48mm/85mm Lenses</li>
               <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> Full Sensor RAW Resolution</li>
             </ul>
@@ -369,7 +417,7 @@
             <ul class="space-y-3 text-sm text-gray-200 mb-8 font-mono">
               <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> 7-Day Free Trial</li>
               <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> All 12 Film Stocks Unlocked</li>
-              <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> Super 8 Video Motion Engine</li>
+              <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> Real-Time Side-by-Side Engine</li>
               <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> Full Lens Stepping (24–85mm)</li>
               <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> Darkroom Restyling & EXIF</li>
             </ul>
@@ -389,50 +437,11 @@
             <ul class="space-y-3 text-sm text-gray-300 mb-8 font-mono">
               <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> Forever Access</li>
               <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> All Present & Future Stocks</li>
-              <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> Super 8 & Full Lens Controls</li>
+              <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> Photo Import & Full Lens Controls</li>
               <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> iOS & Android Dual License</li>
             </ul>
           </div>
           <a href="#" class="btn-secondary text-center justify-center">Get Lifetime Pass</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PORTAINER STACK & DEPLOYMENT INFO -->
-  <section id="deploy" class="py-24 border-b border-gray-800/60 bg-[#090a0f]">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="max-w-4xl mx-auto">
-        <div class="text-center mb-12">
-          <span class="text-amber-500 font-mono text-xs font-bold tracking-widest uppercase mb-2 block">Portainer & Docker Ready</span>
-          <h2 class="text-3xl font-extrabold text-white mb-4">Deploying ChromaCam.art</h2>
-          <p class="text-gray-300 text-base">
-            This promo website is packaged as a standalone Docker container ready to deploy instantly in any Portainer stack.
-          </p>
-        </div>
-
-        <div class="bg-[#12141d] border border-gray-800 rounded-2xl p-6 font-mono text-xs text-gray-300 overflow-x-auto">
-          <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-800 text-gray-400">
-            <span>docker-compose.yml (Portainer + NPM Stack)</span>
-            <span class="text-amber-500">chromacam.art</span>
-          </div>
-          <pre class="text-amber-400/90 leading-relaxed">
-<span class="text-gray-500">version:</span> <span class="text-green-400">'3.8'</span>
-
-<span class="text-gray-500">services:</span>
-  <span class="text-gray-300">chromacam-art-website:</span>
-    <span class="text-gray-500">build:</span> <span class="text-green-400">.</span>
-    <span class="text-gray-500">image:</span> <span class="text-green-400">chromacam-art-website:latest</span>
-    <span class="text-gray-500">container_name:</span> <span class="text-green-400">chromacam_art_web</span>
-    <span class="text-gray-500">restart:</span> <span class="text-green-400">always</span>
-    <span class="text-gray-500">ports:</span>
-      - <span class="text-green-400">"8090:80"</span>
-    <span class="text-gray-500">healthcheck:</span>
-      <span class="text-gray-500">test:</span> [<span class="text-green-400">"CMD"</span>, <span class="text-green-400">"wget"</span>, <span class="text-green-400">"--spider"</span>, <span class="text-green-400">"-q"</span>, <span class="text-green-400">"http://localhost:80"</span>]
-      <span class="text-gray-500">interval:</span> <span class="text-green-400">30s</span>
-      <span class="text-gray-500">timeout:</span> <span class="text-green-400">5s</span>
-      <span class="text-gray-500">retries:</span> <span class="text-green-400">3</span>
-          </pre>
         </div>
       </div>
     </div>

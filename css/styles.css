@@ -112,6 +112,7 @@ body {
   pointer-events: none;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 0 15px rgba(255, 159, 10, 0.2);
+  z-index: 25;
 }
 
 .rangefinder-reticle::before {
@@ -140,6 +141,7 @@ body {
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.3s ease;
+  z-index: 21;
   background: repeating-linear-gradient(
     45deg,
     rgba(255, 230, 0, 0.35),
@@ -161,6 +163,7 @@ body {
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.4s ease;
+  z-index: 22;
   background: radial-gradient(circle at 90% 20%, rgba(255, 140, 0, 0.6) 0%, rgba(255, 60, 0, 0.25) 45%, transparent 75%);
   mix-blend-mode: screen;
 }
@@ -181,6 +184,7 @@ body {
   pointer-events: none;
   text-shadow: 0 0 6px rgba(255, 159, 10, 0.7);
   opacity: 0.9;
+  z-index: 26;
 }
 
 .date-stamp-overlay.mono {
@@ -188,17 +192,17 @@ body {
   text-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
 }
 
-/* Super 8 Flicker */
-@keyframes super8Flicker {
-  0% { opacity: 0.96; transform: scale(1) translateY(0); }
-  25% { opacity: 1; transform: scale(1.002) translateY(-0.5px); }
-  50% { opacity: 0.93; transform: scale(0.999) translateY(0.5px); }
-  75% { opacity: 0.98; transform: scale(1.001) translateY(-0.2px); }
-  100% { opacity: 0.96; transform: scale(1) translateY(0); }
+/* Quick Stock Bar Horizontal Scroll */
+.scrollbar-thin::-webkit-scrollbar {
+  height: 4px;
 }
-
-.super8-active .viewfinder-box {
-  animation: super8Flicker 0.12s infinite steps(2);
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(255, 159, 10, 0.4);
+  border-radius: 2px;
 }
 
 /* Film Stock Cards */
@@ -267,7 +271,7 @@ body {
   border: 1px solid rgba(236, 72, 153, 0.3);
 }
 
-/* Custom Film Filters for Live Preview Canvas */
+/* Custom Film Filters for Live Preview Canvas & Images */
 .filter-amber-gold-200 { filter: sepia(0.25) saturate(1.2) contrast(1.08) hue-rotate(-5deg); }
 .filter-pastel-portrait-400 { filter: saturate(0.92) contrast(0.98) brightness(1.04) sepia(0.1); }
 .filter-gritty-noir-400 { filter: grayscale(1) contrast(1.4) brightness(0.95); }

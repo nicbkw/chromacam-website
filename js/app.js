@@ -1,6 +1,9 @@
 /**
- * ChromaCam.art - Promo Website Interactive Simulator Script
+ * ChromaCam.art - Promo Website Interactive Studio Script
  */
+
+// Default SVG Sample Image Data URI (High Quality Cinematic Landscape)
+const DEFAULT_SAMPLE_IMAGE = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800"><defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%231e3a8a"/><stop offset="50%" stop-color="%233b82f6"/><stop offset="80%" stop-color="%23fdba74"/><stop offset="100%" stop-color="%23f97316"/></linearGradient><linearGradient id="sun" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%23fef08a"/><stop offset="100%" stop-color="%23f97316"/></linearGradient><linearGradient id="mountains1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%231e293b"/><stop offset="100%" stop-color="%230f172a"/></linearGradient><linearGradient id="mountains2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23334155"/><stop offset="100%" stop-color="%231e293b"/></linearGradient></defs><rect width="1200" height="800" fill="url(%23sky)"/><circle cx="850" cy="320" r="140" fill="url(%23sun)" opacity="0.95"/><polygon points="0,800 280,450 600,800" fill="url(%23mountains2)"/><polygon points="350,800 750,380 1150,800" fill="url(%23mountains1)"/><polygon points="700,800 950,480 1200,800" fill="url(%23mountains2)"/><ellipse cx="600" cy="620" r="180" rx="280" ry="40" fill="%230f172a" opacity="0.8"/><circle cx="580" cy="530" r="45" fill="%23090a0f"/><path d="M500 800 C500 640, 660 640, 660 800 Z" fill="%23090a0f"/><rect x="525" y="650" width="110" height="70" rx="10" fill="%231e293b"/><circle cx="880" cy="300" r="260" fill="%23ff9f0a" opacity="0.18"/></svg>`;
 
 // 12 Representative Non-Branded Film Stocks Data
 const filmStocksData = [
@@ -165,15 +168,20 @@ const filmStocksData = [
 // Current State
 let activeStock = filmStocksData[0]; // Amber Gold 200
 let activeAspect = '3:2';
+let viewMode = 'side-by-side'; // 'side-by-side' or 'split-slider'
 let isZebraOn = false;
 let isLeakOn = false;
 let isDateOn = true;
-let isSuper8On = false;
+let currentImageSrc = DEFAULT_SAMPLE_IMAGE;
 
 document.addEventListener('DOMContentLoaded', () => {
+  initImageImporter();
+  initSampleImages();
+  renderQuickStockBar();
   renderStockCards('all');
   initViewfinderEvents();
   initCategoryFilters();
+  initSplitSliderEvents();
   updateViewfinderState();
   
   const currentYearSpan = document.getElementById('current-year');
@@ -181,6 +189,173 @@ document.addEventListener('DOMContentLoaded', () => {
     currentYearSpan.textContent = new Date().getFullYear();
   }
 });
+
+// Initialize Sample Images
+function initSampleImages() {
+  setImageSources(DEFAULT_SAMPLE_IMAGE);
+}
+
+// Set Image Sources across all comparison elements
+function setImageSources(src) {
+  currentImageSrc = src;
+  const ids = ['img-original-side', 'img-emulated-side', 'img-original-split', 'img-emulated-split'];
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.src = src;
+  });
+}
+
+// Image File Importer (Upload + Drag & Drop)
+function initImageImporter() {
+  const fileInput = document.getElementById('photo-upload-input');
+  const container = document.getElementById('viewfinder-container');
+  const statusTag = document.getElementById('import-status-tag');
+
+  if (fileInput) {
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) handleImageFile(file);
+    });
+  }
+
+  if (container) {
+    ['dragenter', 'dragover'].forEach(eventName => {
+      container.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        container.classList.add('border-amber-500', 'ring-2', 'ring-amber-500/50');
+      }, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      container.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        container.classList.remove('border-amber-500', 'ring-2', 'ring-amber-500/50');
+      }, false);
+    });
+
+    container.addEventListener('drop', (e) => {
+      const dt = e.dataTransfer;
+      const file = dt.files[0];
+      if (file && file.type.startsWith('image/')) {
+        handleImageFile(file);
+      }
+    });
+  }
+}
+
+// Process imported file
+function handleImageFile(file) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    setImageSources(e.target.result);
+    const statusTag = document.getElementById('import-status-tag');
+    if (statusTag) {
+      statusTag.textContent = `✓ Imported: ${file.name.length > 20 ? file.name.substring(0, 17) + '...' : file.name}`;
+      statusTag.classList.remove('hidden');
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+// Reset Sample Photo
+function resetSamplePhoto() {
+  setImageSources(DEFAULT_SAMPLE_IMAGE);
+  const fileInput = document.getElementById('photo-upload-input');
+  if (fileInput) fileInput.value = '';
+  const statusTag = document.getElementById('import-status-tag');
+  if (statusTag) {
+    statusTag.textContent = '✓ Sample Photo Loaded';
+    statusTag.classList.remove('hidden');
+  }
+}
+
+// View Mode Switcher ('side-by-side' vs 'split-slider')
+function setViewMode(mode) {
+  viewMode = mode;
+  const sideLayout = document.getElementById('side-by-side-layout');
+  const splitLayout = document.getElementById('split-slider-layout');
+  const btnSide = document.getElementById('btn-mode-side');
+  const btnSplit = document.getElementById('btn-mode-split');
+
+  if (mode === 'side-by-side') {
+    if (sideLayout) sideLayout.classList.remove('hidden');
+    if (splitLayout) splitLayout.classList.add('hidden');
+
+    if (btnSide) {
+      btnSide.className = 'mode-btn px-2.5 py-1 rounded text-amber-400 bg-amber-500/10 font-semibold border border-amber-500/30';
+    }
+    if (btnSplit) {
+      btnSplit.className = 'mode-btn px-2.5 py-1 rounded text-gray-400 hover:text-white';
+    }
+  } else {
+    if (sideLayout) sideLayout.classList.add('hidden');
+    if (splitLayout) splitLayout.classList.remove('hidden');
+
+    if (btnSplit) {
+      btnSplit.className = 'mode-btn px-2.5 py-1 rounded text-amber-400 bg-amber-500/10 font-semibold border border-amber-500/30';
+    }
+    if (btnSide) {
+      btnSide.className = 'mode-btn px-2.5 py-1 rounded text-gray-400 hover:text-white';
+    }
+  }
+}
+
+// Split Slider Drag Events
+function initSplitSliderEvents() {
+  const container = document.getElementById('split-slider-layout');
+  const handle = document.getElementById('split-handle');
+  const clipWrapper = document.getElementById('split-clip-wrapper');
+  let isDragging = false;
+
+  if (!container || !handle || !clipWrapper) return;
+
+  const updateSplitPos = (clientX) => {
+    const rect = container.getBoundingClientRect();
+    let x = clientX - rect.left;
+    if (x < 0) x = 0;
+    if (x > rect.width) x = rect.width;
+    const percentage = (x / rect.width) * 100;
+
+    handle.style.left = `${percentage}%`;
+    clipWrapper.style.width = `${percentage}%`;
+  };
+
+  handle.addEventListener('mousedown', () => { isDragging = true; });
+  window.addEventListener('mouseup', () => { isDragging = false; });
+  window.addEventListener('mousemove', (e) => {
+    if (isDragging) updateSplitPos(e.clientX);
+  });
+
+  // Touch Support
+  handle.addEventListener('touchstart', () => { isDragging = true; });
+  window.addEventListener('touchend', () => { isDragging = false; });
+  window.addEventListener('touchmove', (e) => {
+    if (isDragging && e.touches[0]) updateSplitPos(e.touches[0].clientX);
+  });
+}
+
+// Quick Film Stock Selector Bar
+function renderQuickStockBar() {
+  const bar = document.getElementById('quick-stock-bar');
+  if (!bar) return;
+
+  bar.innerHTML = '';
+  filmStocksData.forEach(stock => {
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = `stock-chip px-3 py-1.5 rounded-lg text-xs font-mono font-medium whitespace-nowrap border transition-all ${stock.id === activeStock.id ? 'bg-amber-500 text-black border-amber-500 font-bold shadow-md shadow-amber-500/20' : 'bg-[#181b27] text-gray-300 border-gray-800 hover:border-amber-500/50'}`;
+    chip.setAttribute('data-id', stock.id);
+    chip.innerHTML = `<span>${stock.name}</span> <span class="text-[10px] opacity-75">(${stock.iso})</span>`;
+
+    chip.addEventListener('click', () => {
+      selectStock(stock.id);
+    });
+
+    bar.appendChild(chip);
+  });
+}
 
 // Render Film Stock Cards Grid
 function renderStockCards(filterCategory) {
@@ -216,15 +391,15 @@ function renderStockCards(filterCategory) {
         ${stock.descriptionNote}
       </p>
       <div class="pt-3 border-t border-gray-800 flex items-center justify-between">
-        <span class="text-xs text-gray-400 font-mono-code">Tap to test live profile</span>
-        <button class="text-xs font-semibold text-amber-500 hover:text-amber-400 transition-colors flex items-center gap-1">
+        <span class="text-xs text-amber-500 font-mono-code">Tap to compare side-by-side</span>
+        <button type="button" class="text-xs font-semibold text-amber-500 hover:text-amber-400 transition-colors flex items-center gap-1">
           Apply Tone Curve →
         </button>
       </div>
     `;
     
     card.addEventListener('click', () => {
-      selectStock(stock.id);
+      selectStock(stock.id, true);
     });
     
     grid.appendChild(card);
@@ -250,13 +425,13 @@ function initCategoryFilters() {
 }
 
 // Select Active Film Stock
-function selectStock(stockId) {
+function selectStock(stockId, scrollToStudio = false) {
   const stock = filmStocksData.find(s => s.id === stockId);
   if (!stock) return;
   
   activeStock = stock;
   
-  // Highlight card
+  // Highlight card in grid
   document.querySelectorAll('.stock-card').forEach(card => {
     if (card.getAttribute('data-id') === stockId) {
       card.classList.add('active-stock');
@@ -264,27 +439,50 @@ function selectStock(stockId) {
       card.classList.remove('active-stock');
     }
   });
+
+  // Highlight quick stock chip
+  document.querySelectorAll('.stock-chip').forEach(chip => {
+    if (chip.getAttribute('data-id') === stockId) {
+      chip.className = 'stock-chip px-3 py-1.5 rounded-lg text-xs font-mono font-bold whitespace-nowrap border transition-all bg-amber-500 text-black border-amber-500 shadow-md shadow-amber-500/20';
+    } else {
+      chip.className = 'stock-chip px-3 py-1.5 rounded-lg text-xs font-mono font-medium whitespace-nowrap border transition-all bg-[#181b27] text-gray-300 border-gray-800 hover:border-amber-500/50';
+    }
+  });
   
   updateViewfinderState();
+
+  if (scrollToStudio) {
+    const studio = document.getElementById('comparison');
+    if (studio) {
+      studio.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
 }
 
 // Update Viewfinder Live State
 function updateViewfinderState() {
-  const sampleImg = document.getElementById('viewfinder-sample-img');
+  const imgEmulatedSide = document.getElementById('img-emulated-side');
+  const imgEmulatedSplit = document.getElementById('img-emulated-split');
   const stockNameBadge = document.getElementById('vf-stock-name');
+  const sideTag = document.getElementById('side-emulation-tag');
+  const splitTag = document.getElementById('split-emulation-tag');
   const isoBadge = document.getElementById('vf-iso');
   const descNote = document.getElementById('vf-desc-note');
   const dateStamp = document.getElementById('vf-date-stamp');
   const container = document.getElementById('viewfinder-container');
-  
-  if (sampleImg) {
-    // Strip old filter classes
-    filmStocksData.forEach(s => sampleImg.classList.remove(s.filterClass));
-    // Add active filter class
-    sampleImg.classList.add(activeStock.filterClass);
-  }
+
+  [imgEmulatedSide, imgEmulatedSplit].forEach(img => {
+    if (img) {
+      // Strip old filter classes
+      filmStocksData.forEach(s => img.classList.remove(s.filterClass));
+      // Add active filter class
+      img.classList.add(activeStock.filterClass);
+    }
+  });
   
   if (stockNameBadge) stockNameBadge.textContent = activeStock.name;
+  if (sideTag) sideTag.textContent = activeStock.name;
+  if (splitTag) splitTag.textContent = activeStock.name;
   if (isoBadge) isoBadge.textContent = `ISO ${activeStock.iso}`;
   if (descNote) descNote.textContent = activeStock.descriptionNote;
   
@@ -297,11 +495,11 @@ function updateViewfinderState() {
   }
   
   if (container) {
-    container.className = `viewfinder-box relative transition-all duration-300 ${isZebraOn ? 'zebra-active' : ''} ${isLeakOn ? 'leak-active' : ''} ${isSuper8On ? 'super8-active' : ''}`;
+    container.className = `viewfinder-box relative transition-all duration-300 ${isZebraOn ? 'zebra-active' : ''} ${isLeakOn ? 'leak-active' : ''}`;
   }
 }
 
-// Interactive Viewfinder Tap / Drag
+// Interactive Viewfinder Reticle Tap / Drag
 function initViewfinderEvents() {
   const vfContainer = document.getElementById('viewfinder-container');
   const reticle = document.getElementById('vf-reticle');
@@ -309,6 +507,7 @@ function initViewfinderEvents() {
   
   if (vfContainer && reticle) {
     vfContainer.addEventListener('mousemove', (e) => {
+      if (viewMode === 'split-slider') return; // let split handle process horizontal
       const rect = vfContainer.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
@@ -375,12 +574,4 @@ function toggleDate() {
   if (stamp) stamp.style.display = isDateOn ? 'block' : 'none';
   if (btn) btn.classList.toggle('bg-amber-500', isDateOn);
   if (btn) btn.classList.toggle('text-black', isDateOn);
-}
-
-function toggleSuper8() {
-  isSuper8On = !isSuper8On;
-  const btn = document.getElementById('btn-toggle-super8');
-  if (btn) btn.classList.toggle('bg-amber-500', isSuper8On);
-  if (btn) btn.classList.toggle('text-black', isSuper8On);
-  updateViewfinderState();
 }

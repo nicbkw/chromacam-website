@@ -1,7 +1,6 @@
 version: '3.8'
 
-# Portainer Stack Definition for chromacam.art
-# Designed for Portainer (portainer.remon.uk) + Nginx Proxy Manager (npm.remon.uk)
+# Container Stack Definition for chromacam.art
 
 services:
   chromacam-art-website:
