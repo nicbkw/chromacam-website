@@ -2,8 +2,8 @@
  * ChromaCam.art - Promo Website Interactive Studio Script
  */
 
-// Default SVG Sample Image Data URI (High Quality Cinematic Landscape)
-const DEFAULT_SAMPLE_IMAGE = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800"><defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%231e3a8a"/><stop offset="50%" stop-color="%233b82f6"/><stop offset="80%" stop-color="%23fdba74"/><stop offset="100%" stop-color="%23f97316"/></linearGradient><linearGradient id="sun" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%23fef08a"/><stop offset="100%" stop-color="%23f97316"/></linearGradient><linearGradient id="mountains1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%231e293b"/><stop offset="100%" stop-color="%230f172a"/></linearGradient><linearGradient id="mountains2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23334155"/><stop offset="100%" stop-color="%231e293b"/></linearGradient></defs><rect width="1200" height="800" fill="url(%23sky)"/><circle cx="850" cy="320" r="140" fill="url(%23sun)" opacity="0.95"/><polygon points="0,800 280,450 600,800" fill="url(%23mountains2)"/><polygon points="350,800 750,380 1150,800" fill="url(%23mountains1)"/><polygon points="700,800 950,480 1200,800" fill="url(%23mountains2)"/><ellipse cx="600" cy="620" r="180" rx="280" ry="40" fill="%230f172a" opacity="0.8"/><circle cx="580" cy="530" r="45" fill="%23090a0f"/><path d="M500 800 C500 640, 660 640, 660 800 Z" fill="%23090a0f"/><rect x="525" y="650" width="110" height="70" rx="10" fill="%231e293b"/><circle cx="880" cy="300" r="260" fill="%23ff9f0a" opacity="0.18"/></svg>`;
+// Default Base64 SVG Sample Image Data URI
+const DEFAULT_SAMPLE_IMAGE = `data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDgwMCIgd2lkdGg9IjEyMDAiIGhlaWdodD0iODAwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ic2t5IiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxZTNhOGEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI0MCUiIHN0b3AtY29sb3I9IiMzYjgyZjYiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI3NSUiIHN0b3AtY29sb3I9IiNmZGJhNzQiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZjk3MzE2Ii8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJzdW4iIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZlZjA4YSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmOTczMTYiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Im0xIiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxZTI5M2IiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMGYxNzJhIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJtMiIgeDE9IjAiIHkxPSIwIiB4Mj0iMCIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMzM0MTU1Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzFlMjkzYiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iODAwIiBmaWxsPSJ1cmwoI3NreSkiLz4KICA8Y2lyY2xlIGN4PSI4NTAiIGN5PSIzMDAiIHI9IjEzMCIgZmlsbD0idXJsKCNzdW4pIiBvcGFjaXR5PSIwLjk1Ii8+CiAgPHBvbHlnb24gcG9pbnRzPSIwLDgwMCAyODAsNDIwIDYwMCw4MDAiIGZpbGw9InVybCgjbTIpIi8+CiAgPHBvbHlnb24gcG9pbnRzPSIzMjAsODAwIDc1MCwzNTAgMTE1MCw4MDAiIGZpbGw9InVybCgjbTEpIi8+CiAgPHBvbHlnb24gcG9pbnRzPSI2ODAsODAwIDk2MCw0NTAgMTIwMCw4MDAiIGZpbGw9InVybCgjbTIpIi8+CiAgPGVsbGlwc2UgY3g9IjYwMCIgY3k9IjY1MCIgcj0iMjYwIiByeT0iMzUiIGZpbGw9IiMwZjE3MmEiIG9wYWNpdHk9IjAuODUiLz4KICA8Y2lyY2xlIGN4PSI1ODAiIGN5PSI1NjAiIHI9IjQwIiBmaWxsPSIjMDkwYTBmIi8+CiAgPHBhdGggZD0iTTUxMCA4MDAgQzUxMCA2NjAsIDY1MCA2NjAsIDY1MCA4MDAgWiIgZmlsbD0iIzA5MGEwZiIvPgogIDxyZWN0IHg9IjUzNSIgeT0iNjcwIiB3aWR0aD0iOTAiIGhlaWdodD0iNjAiIHJ4PSI4IiBmaWxsPSIjMWUyOTNiIi8+CiAgPGNpcmNsZSBjeD0iODUwIiBjeT0iMzAwIiByPSIyNDAiIGZpbGw9IiNmZjlmMGEiIG9wYWNpdHk9IjAuMTUiLz4KPC9zdmc+`;
 
 // 12 Representative Non-Branded Film Stocks Data
 const filmStocksData = [
@@ -201,19 +201,30 @@ function setImageSources(src) {
   const ids = ['img-original-side', 'img-emulated-side', 'img-original-split', 'img-emulated-split'];
   ids.forEach(id => {
     const el = document.getElementById(id);
-    if (el) el.src = src;
+    if (el) {
+      el.src = src;
+      el.style.display = 'block';
+    }
   });
 }
 
 // Image File Importer (Upload + Drag & Drop)
 function initImageImporter() {
   const fileInput = document.getElementById('photo-upload-input');
+  const importBtn = document.getElementById('btn-import-photo');
   const container = document.getElementById('viewfinder-container');
-  const statusTag = document.getElementById('import-status-tag');
+
+  if (importBtn && fileInput) {
+    importBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      fileInput.value = null; // Reset value so selecting same file fires change
+      fileInput.click();
+    });
+  }
 
   if (fileInput) {
     fileInput.addEventListener('change', (e) => {
-      const file = e.target.files[0];
+      const file = e.target.files && e.target.files[0];
       if (file) handleImageFile(file);
     });
   }
@@ -223,7 +234,7 @@ function initImageImporter() {
       container.addEventListener(eventName, (e) => {
         e.preventDefault();
         e.stopPropagation();
-        container.classList.add('border-amber-500', 'ring-2', 'ring-amber-500/50');
+        container.classList.add('ring-4', 'ring-amber-500');
       }, false);
     });
 
@@ -231,13 +242,13 @@ function initImageImporter() {
       container.addEventListener(eventName, (e) => {
         e.preventDefault();
         e.stopPropagation();
-        container.classList.remove('border-amber-500', 'ring-2', 'ring-amber-500/50');
+        container.classList.remove('ring-4', 'ring-amber-500');
       }, false);
     });
 
     container.addEventListener('drop', (e) => {
       const dt = e.dataTransfer;
-      const file = dt.files[0];
+      const file = dt.files && dt.files[0];
       if (file && file.type.startsWith('image/')) {
         handleImageFile(file);
       }
@@ -247,12 +258,16 @@ function initImageImporter() {
 
 // Process imported file
 function handleImageFile(file) {
+  if (!file || !file.type.startsWith('image/')) return;
+
   const reader = new FileReader();
   reader.onload = (e) => {
-    setImageSources(e.target.result);
+    const resultSrc = e.target.result;
+    setImageSources(resultSrc);
+
     const statusTag = document.getElementById('import-status-tag');
     if (statusTag) {
-      statusTag.textContent = `✓ Imported: ${file.name.length > 20 ? file.name.substring(0, 17) + '...' : file.name}`;
+      statusTag.textContent = `✓ Photo: ${file.name.length > 18 ? file.name.substring(0, 15) + '...' : file.name}`;
       statusTag.classList.remove('hidden');
     }
   };
@@ -319,7 +334,7 @@ function initSplitSliderEvents() {
     const percentage = (x / rect.width) * 100;
 
     handle.style.left = `${percentage}%`;
-    clipWrapper.style.width = `${percentage}%`;
+    clipWrapper.style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;
   };
 
   handle.addEventListener('mousedown', () => { isDragging = true; });
@@ -507,7 +522,7 @@ function initViewfinderEvents() {
   
   if (vfContainer && reticle) {
     vfContainer.addEventListener('mousemove', (e) => {
-      if (viewMode === 'split-slider') return; // let split handle process horizontal
+      if (viewMode === 'split-slider') return;
       const rect = vfContainer.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;

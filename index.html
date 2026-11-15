@@ -86,11 +86,11 @@
             
             <!-- Image Import Controls -->
             <div class="flex items-center gap-3">
-              <label for="photo-upload-input" class="cursor-pointer bg-amber-500 hover:bg-amber-400 text-black font-bold px-3.5 py-1.5 rounded-lg flex items-center gap-2 transition-colors">
+              <button type="button" id="btn-import-photo" onclick="document.getElementById('photo-upload-input').click()" class="cursor-pointer bg-amber-500 hover:bg-amber-400 text-black font-bold px-3.5 py-1.5 rounded-lg flex items-center gap-2 transition-colors">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
                 <span>Import Photo</span>
-              </label>
-              <input type="file" id="photo-upload-input" accept="image/*" class="hidden">
+              </button>
+              <input type="file" id="photo-upload-input" accept="image/*" class="hidden" onclick="this.value=null">
               <button id="btn-reset-photo" onclick="resetSamplePhoto()" class="px-3 py-1.5 rounded-lg border border-gray-700 text-gray-400 hover:text-white hover:border-gray-500 transition-colors">
                 Reset Sample
               </button>
@@ -136,13 +136,13 @@
             <div id="viewfinder-frame" class="w-full relative overflow-hidden transition-all duration-300" style="aspect-ratio: 3/2;">
               
               <!-- 1. SIDE-BY-SIDE MODE CONTAINER -->
-              <div id="side-by-side-layout" class="w-full h-full grid grid-cols-2 gap-1 bg-black">
+              <div id="side-by-side-layout" class="absolute inset-0 grid grid-cols-2 gap-1 bg-black">
                 <!-- Left Pane: Original Image -->
                 <div class="relative w-full h-full overflow-hidden group">
                   <div class="absolute top-3 left-3 z-20 px-2.5 py-1 rounded bg-black/70 backdrop-blur border border-white/20 text-[10px] font-mono text-gray-200 uppercase tracking-wider">
                     Original
                   </div>
-                  <img id="img-original-side" class="w-full h-full object-cover select-none" src="" alt="Original Photo Preview">
+                  <img id="img-original-side" class="w-full h-full object-cover select-none block" src="" alt="Original Photo Preview">
                 </div>
 
                 <!-- Right Pane: Film Emulated Image -->
@@ -150,18 +150,18 @@
                   <div class="absolute top-3 right-3 z-20 px-2.5 py-1 rounded bg-amber-500/90 text-black font-bold text-[10px] font-mono uppercase tracking-wider shadow-lg" id="side-emulation-tag">
                     Amber Gold 200
                   </div>
-                  <img id="img-emulated-side" class="w-full h-full object-cover filter-amber-gold-200 transition-all duration-500 select-none" src="" alt="Film Emulation Photo Preview">
+                  <img id="img-emulated-side" class="w-full h-full object-cover filter-amber-gold-200 transition-all duration-500 select-none block" src="" alt="Film Emulation Photo Preview">
                 </div>
               </div>
 
               <!-- 2. SPLIT SLIDER MODE CONTAINER (Hidden by default) -->
-              <div id="split-slider-layout" class="w-full h-full relative overflow-hidden hidden">
+              <div id="split-slider-layout" class="absolute inset-0 overflow-hidden hidden">
                 <!-- Base Layer: Emulated Image -->
-                <img id="img-emulated-split" class="w-full h-full object-cover filter-amber-gold-200 transition-all duration-500 absolute inset-0 select-none" src="" alt="Film Emulation Photo Preview">
+                <img id="img-emulated-split" class="w-full h-full object-cover filter-amber-gold-200 transition-all duration-500 absolute inset-0 select-none block" src="" alt="Film Emulation Photo Preview">
                 
                 <!-- Clipped Overlay Layer: Original Image -->
-                <div id="split-clip-wrapper" class="absolute inset-0 overflow-hidden pointer-events-none" style="width: 50%;">
-                  <img id="img-original-split" class="w-full h-full object-cover select-none max-w-none" src="" alt="Original Photo Preview">
+                <div id="split-clip-wrapper" class="absolute inset-0 overflow-hidden pointer-events-none" style="clip-path: inset(0 50% 0 0);">
+                  <img id="img-original-split" class="w-full h-full object-cover select-none block" src="" alt="Original Photo Preview">
                 </div>
 
                 <!-- Split Divider Handle -->
