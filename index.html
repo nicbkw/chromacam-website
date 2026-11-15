@@ -67,7 +67,7 @@
           ChromaCam delivers 12 authentic 35mm film stock emulations, rangefinder focus precision, quartz LED date stamps, and procedural light leaks—powered by a shared C++20 optical engine. Import your own photo below to test original vs film emulation side-by-side.
         </p>
         <div class="flex flex-wrap items-center justify-center gap-4">
-          <label for="photo-upload-input" class="btn-primary cursor-pointer">
+          <label for="photo-upload-input" class="btn-primary cursor-pointer select-none">
             <span>Import Your Photo & Compare</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
           </label>
@@ -90,7 +90,7 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
                 <span>Import Photo</span>
               </label>
-              <input type="file" id="photo-upload-input" accept="image/*" class="sr-only">
+              <input type="file" id="photo-upload-input" accept="image/*" class="sr-only" onchange="handleImageInputChange(this)">
               <button type="button" id="btn-reset-photo" onclick="resetSamplePhoto()" class="px-3 py-1.5 rounded-lg border border-gray-700 text-gray-400 hover:text-white hover:border-gray-500 transition-colors">
                 Reset Sample
               </button>
@@ -133,35 +133,35 @@
 
           <!-- COMPARISON DISPLAY CONTAINER -->
           <div id="viewfinder-container" class="viewfinder-box relative mb-4 cursor-crosshair select-none">
-            <div id="viewfinder-frame" class="w-full relative overflow-hidden transition-all duration-300" style="aspect-ratio: 3/2;">
+            <div id="viewfinder-frame" class="viewfinder-frame-container transition-all duration-300" style="aspect-ratio: 3/2;">
               
               <!-- 1. SIDE-BY-SIDE MODE CONTAINER -->
-              <div id="side-by-side-layout" class="absolute inset-0 grid grid-cols-2 gap-1 bg-black">
+              <div id="side-by-side-layout" class="side-by-side-grid-layout">
                 <!-- Left Pane: Original Image -->
-                <div class="relative w-full h-full overflow-hidden group">
+                <div class="side-by-side-pane group">
                   <div class="absolute top-3 left-3 z-20 px-2.5 py-1 rounded bg-black/70 backdrop-blur border border-white/20 text-[10px] font-mono text-gray-200 uppercase tracking-wider">
                     Original
                   </div>
-                  <img id="img-original-side" class="w-full h-full object-cover select-none block" src="" alt="Original Photo Preview">
+                  <img id="img-original-side" class="comparison-preview-img select-none" src="" alt="Original Photo Preview">
                 </div>
 
                 <!-- Right Pane: Film Emulated Image -->
-                <div class="relative w-full h-full overflow-hidden group">
+                <div class="side-by-side-pane group">
                   <div class="absolute top-3 right-3 z-20 px-2.5 py-1 rounded bg-amber-500/90 text-black font-bold text-[10px] font-mono uppercase tracking-wider shadow-lg" id="side-emulation-tag">
                     Amber Gold 200
                   </div>
-                  <img id="img-emulated-side" class="w-full h-full object-cover filter-amber-gold-200 transition-all duration-500 select-none block" src="" alt="Film Emulation Photo Preview">
+                  <img id="img-emulated-side" class="comparison-preview-img filter-amber-gold-200 transition-all duration-500 select-none" src="" alt="Film Emulation Photo Preview">
                 </div>
               </div>
 
               <!-- 2. SPLIT SLIDER MODE CONTAINER (Hidden by default) -->
               <div id="split-slider-layout" class="absolute inset-0 overflow-hidden hidden">
                 <!-- Base Layer: Emulated Image -->
-                <img id="img-emulated-split" class="w-full h-full object-cover filter-amber-gold-200 transition-all duration-500 absolute inset-0 select-none block" src="" alt="Film Emulation Photo Preview">
+                <img id="img-emulated-split" class="comparison-preview-img filter-amber-gold-200 transition-all duration-500 absolute inset-0 select-none" src="" alt="Film Emulation Photo Preview">
                 
                 <!-- Clipped Overlay Layer: Original Image -->
                 <div id="split-clip-wrapper" class="absolute inset-0 overflow-hidden pointer-events-none" style="clip-path: inset(0 50% 0 0);">
-                  <img id="img-original-split" class="w-full h-full object-cover select-none block" src="" alt="Original Photo Preview">
+                  <img id="img-original-split" class="comparison-preview-img select-none" src="" alt="Original Photo Preview">
                 </div>
 
                 <!-- Split Divider Handle -->
