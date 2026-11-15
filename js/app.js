@@ -12,7 +12,7 @@ const filmStocksData = [
     name: 'Amber Gold 200',
     originalBrand: 'Kodak Gold 200',
     category: 'color_negative',
-    categoryLabel: 'Color Negative',
+    categoryLabel: 'Colour Negative',
     iso: 200,
     tier: 'free',
     badgeClass: 'badge-free',
@@ -25,13 +25,13 @@ const filmStocksData = [
     name: 'Pastel Portrait 400',
     originalBrand: 'Kodak Portra 400',
     category: 'color_negative',
-    categoryLabel: 'Color Negative',
+    categoryLabel: 'Colour Negative',
     iso: 400,
     tier: 'free',
     badgeClass: 'badge-free',
     filterClass: 'filter-pastel-portrait-400',
     halation: 'Subtle Red',
-    descriptionNote: 'Industry-standard portrait emulsion featuring flattering natural skin tones, smooth micro-contrast, low-saturation pastel colors, and forgiving highlight roll-off across all natural lighting conditions.'
+    descriptionNote: 'Industry-standard portrait emulsion featuring flattering natural skin tones, smooth micro-contrast, low-saturation pastel colours, and forgiving highlight roll-off across all natural lighting conditions.'
   },
   {
     id: 'gritty-noir-400',
@@ -57,7 +57,7 @@ const filmStocksData = [
     badgeClass: 'badge-pro',
     filterClass: 'filter-neutral-slide-100',
     halation: 'None',
-    descriptionNote: 'Precision daylight E-6 color reversal slide stock featuring clean neutral tones, ultra-fine grain structure, linear color accuracy, and cool transparent shadow depth.'
+    descriptionNote: 'Precision daylight E-6 colour reversal slide stock featuring clean neutral tones, ultra-fine grain structure, linear colour accuracy, and cool transparent shadow depth.'
   },
   {
     id: 'vivid-landscape-50',
@@ -77,7 +77,7 @@ const filmStocksData = [
     name: 'Tungsten Halation 800',
     originalBrand: 'CineStill 800T',
     category: 'color_negative',
-    categoryLabel: 'Color Negative',
+    categoryLabel: 'Colour Negative',
     iso: 800,
     tier: 'pro',
     badgeClass: 'badge-pro',
@@ -103,20 +103,20 @@ const filmStocksData = [
     name: 'Emerald Peach 400',
     originalBrand: 'Fujifilm Superia 400',
     category: 'color_negative',
-    categoryLabel: 'Color Negative',
+    categoryLabel: 'Colour Negative',
     iso: 400,
     tier: 'pro',
     badgeClass: 'badge-pro',
     filterClass: 'filter-emerald-peach-400',
     halation: 'Soft Peach',
-    descriptionNote: '4th-color-layer negative formula rendering distinct emerald shadow tints, vibrant turquoise sky hues, and soft peach skin tones under mixed daylight and fluorescent lighting.'
+    descriptionNote: '4th-colour-layer negative formula rendering distinct emerald shadow tints, vibrant turquoise sky hues, and soft peach skin tones under mixed daylight and fluorescent lighting.'
   },
   {
     id: 'party-flash-800',
     name: 'Party Flash 800',
     originalBrand: 'Kodak FunSaver 800',
     category: 'color_negative',
-    categoryLabel: 'Color Negative',
+    categoryLabel: 'Colour Negative',
     iso: 800,
     tier: 'pro',
     badgeClass: 'badge-pro',
@@ -135,20 +135,20 @@ const filmStocksData = [
     badgeClass: 'badge-pro',
     filterClass: 'filter-crimson-infrared-400',
     halation: 'Crimson Bloom 2.2px',
-    descriptionNote: 'Surreal false-color infrared transparency stock that transforms foliage and midtone greens into vibrant crimson red and hot magenta with glowing highlight contrast.'
+    descriptionNote: 'Surreal false-colour infrared transparency stock that transforms foliage and midtone greens into vibrant crimson red and hot magenta with glowing highlight contrast.'
   },
   {
     id: 'instant-pastel-600',
     name: 'Instant Pastel 600',
     originalBrand: 'Polaroid 600',
     category: 'color_negative',
-    categoryLabel: 'Color Instant',
+    categoryLabel: 'Colour Instant',
     iso: 640,
     tier: 'pro',
     badgeClass: 'badge-pro',
     filterClass: 'filter-instant-pastel-600',
     halation: 'Soft Orange',
-    descriptionNote: 'Instant square film emulation featuring lifted creamy blacks, warm vintage split-toning, soft pastel highlights, and nostalgic analog mood.'
+    descriptionNote: 'Instant square film emulation featuring lifted creamy blacks, warm vintage split-toning, soft pastel highlights, and nostalgic analogue mood.'
   },
   {
     id: 'deep-infrared-mono-200',
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Initialize Sample Images
+// Initialise Sample Images
 function initSampleImages() {
   setImageSources(DEFAULT_SAMPLE_IMAGE);
 }
