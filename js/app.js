@@ -2,7 +2,6 @@
  * ChromaCam.art - Promo Website Interactive Studio Script
  */
 
-// Default Base64 SVG Sample Image Data URI
 // Default Sample Image Path
 const DEFAULT_SAMPLE_IMAGE = 'images/french-village.jpg';
 
@@ -303,17 +302,25 @@ function updateStatusTag(filename) {
   }
 }
 
-// Reset Sample Photo
-function resetSamplePhoto() {
-  setImageSources(DEFAULT_SAMPLE_IMAGE);
+// Load Selected Preset Sample Photo
+function loadSampleImage(filename, label) {
+  const src = `images/${filename}`;
+  setImageSources(src);
   const fileInput = document.getElementById('photo-upload-input');
   if (fileInput) fileInput.value = '';
   const statusTag = document.getElementById('import-status-tag');
   if (statusTag) {
-    statusTag.textContent = '✓ Sample Photo Loaded';
+    statusTag.textContent = `✓ ${label || 'Sample Photo'} Loaded`;
     statusTag.classList.remove('hidden');
     statusTag.style.display = 'inline-block';
   }
+}
+
+// Reset Sample Photo
+function resetSamplePhoto() {
+  loadSampleImage('french-village.jpg', 'French Village');
+  const sampleSelect = document.getElementById('sample-photo-select');
+  if (sampleSelect) sampleSelect.value = 'french-village.jpg';
 }
 
 // Split Slider Drag Events
