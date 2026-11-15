@@ -546,31 +546,9 @@ function updateViewfinderState() {
   }
 }
 
-// Interactive Viewfinder Reticle Tap / Drag
+// Interactive Viewfinder Events
 function initViewfinderEvents() {
-  const vfContainer = document.getElementById('viewfinder-container');
-  const reticle = document.getElementById('vf-reticle');
-  const afBadge = document.getElementById('vf-af-badge');
-  
-  if (vfContainer && reticle) {
-    vfContainer.addEventListener('mousemove', (e) => {
-      if (viewMode === 'split-slider') return;
-      const rect = vfContainer.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      reticle.style.left = `${x}px`;
-      reticle.style.top = `${y}px`;
-      
-      if (afBadge) afBadge.textContent = `AF LOCK (${Math.round((x/rect.width)*100)}%, ${Math.round((y/rect.height)*100)}%)`;
-    });
-    
-    vfContainer.addEventListener('mouseleave', () => {
-      reticle.style.left = '50%';
-      reticle.style.top = '50%';
-      if (afBadge) afBadge.textContent = 'AF LOCK (CENTER)';
-    });
-  }
+  // Reticle and AF Lock removed from side-by-side compare
 }
 
 // Aspect Ratio Switcher
