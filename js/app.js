@@ -10,6 +10,8 @@ const filmStocksData = [
   {
     id: 'amber-gold-200',
     name: 'Amber Gold 200',
+    grainClass: 'grain-medium',
+    grainLabel: '14% Silver Halide',
     originalBrand: 'Kodak Gold 200',
     category: 'color_negative',
     categoryLabel: 'Colour Negative',
@@ -23,6 +25,8 @@ const filmStocksData = [
   {
     id: 'pastel-portrait-400',
     name: 'Pastel Portrait 400',
+    grainClass: 'grain-medium',
+    grainLabel: '18% Fine Silver',
     originalBrand: 'Kodak Portra 400',
     category: 'color_negative',
     categoryLabel: 'Colour Negative',
@@ -36,6 +40,8 @@ const filmStocksData = [
   {
     id: 'gritty-noir-400',
     name: 'Gritty Noir 400',
+    grainClass: 'grain-heavy',
+    grainLabel: '36% Heavy Tri-X',
     originalBrand: 'Kodak Tri-X 400',
     category: 'monochrome',
     categoryLabel: 'Monochrome',
@@ -49,6 +55,8 @@ const filmStocksData = [
   {
     id: 'neutral-slide-100',
     name: 'Neutral Slide 100',
+    grainClass: 'grain-fine',
+    grainLabel: '6% Micro Slide',
     originalBrand: 'Kodak Ektachrome E100',
     category: 'slide_reversal',
     categoryLabel: 'Slide Reversal',
@@ -62,6 +70,8 @@ const filmStocksData = [
   {
     id: 'vivid-landscape-50',
     name: 'Vivid Landscape 50',
+    grainClass: 'grain-fine',
+    grainLabel: '4% Ultra-Fine',
     originalBrand: 'Fujifilm Velvia 50',
     category: 'slide_reversal',
     categoryLabel: 'Slide Reversal',
@@ -75,6 +85,8 @@ const filmStocksData = [
   {
     id: 'tungsten-halation-800',
     name: 'Tungsten Halation 800',
+    grainClass: 'grain-coarse',
+    grainLabel: '26% High-Speed Motion',
     originalBrand: 'CineStill 800T',
     category: 'color_negative',
     categoryLabel: 'Colour Negative',
@@ -88,6 +100,8 @@ const filmStocksData = [
   {
     id: 'tonal-mono-400',
     name: 'Tonal Mono 400',
+    grainClass: 'grain-medium',
+    grainLabel: '20% Medium Mono',
     originalBrand: 'Ilford HP5 Plus',
     category: 'monochrome',
     categoryLabel: 'Monochrome',
@@ -101,6 +115,8 @@ const filmStocksData = [
   {
     id: 'emerald-peach-400',
     name: 'Emerald Peach 400',
+    grainClass: 'grain-medium',
+    grainLabel: '16% 4th Layer',
     originalBrand: 'Fujifilm Superia 400',
     category: 'color_negative',
     categoryLabel: 'Colour Negative',
@@ -114,6 +130,8 @@ const filmStocksData = [
   {
     id: 'party-flash-800',
     name: 'Party Flash 800',
+    grainClass: 'grain-coarse',
+    grainLabel: '28% Disposable Flash',
     originalBrand: 'Kodak FunSaver 800',
     category: 'color_negative',
     categoryLabel: 'Colour Negative',
@@ -127,6 +145,8 @@ const filmStocksData = [
   {
     id: 'crimson-infrared-400',
     name: 'Crimson Infrared 400',
+    grainClass: 'grain-coarse',
+    grainLabel: '24% False-Colour IR',
     originalBrand: 'Kodak Aerochrome IR',
     category: 'slide_reversal',
     categoryLabel: 'Slide Reversal',
@@ -140,6 +160,8 @@ const filmStocksData = [
   {
     id: 'instant-pastel-600',
     name: 'Instant Pastel 600',
+    grainClass: 'grain-coarse',
+    grainLabel: '22% Instant Pack',
     originalBrand: 'Polaroid 600',
     category: 'color_negative',
     categoryLabel: 'Colour Instant',
@@ -153,6 +175,8 @@ const filmStocksData = [
   {
     id: 'deep-infrared-mono-200',
     name: 'Deep Infrared Mono 200',
+    grainClass: 'grain-heavy',
+    grainLabel: '32% Deep 740nm IR',
     originalBrand: 'Ilford SFX 200',
     category: 'monochrome',
     categoryLabel: 'Monochrome IR',
@@ -168,6 +192,7 @@ const filmStocksData = [
 // Current State
 let activeStock = filmStocksData[0]; // Amber Gold 200
 let activeAspect = '3:2';
+let isGrainOn = true;
 let isLeakOn = false;
 let isDateOn = true;
 let currentImageSrc = DEFAULT_SAMPLE_IMAGE;
@@ -483,9 +508,11 @@ function selectStock(stockId, scrollToStudio = false) {
 // Update Viewfinder Live State
 function updateViewfinderState() {
   const imgEmulatedSplit = document.getElementById('img-emulated-split');
+  const grainLayer = document.getElementById('emulated-grain-layer');
   const stockNameBadge = document.getElementById('vf-stock-name');
   const splitTag = document.getElementById('split-emulation-tag');
   const isoBadge = document.getElementById('vf-iso');
+  const grainBadge = document.getElementById('vf-grain-tag');
   const descNote = document.getElementById('vf-desc-note');
   const dateStamp = document.getElementById('vf-date-stamp');
   const container = document.getElementById('viewfinder-container');
@@ -496,10 +523,15 @@ function updateViewfinderState() {
     // Add active filter class
     imgEmulatedSplit.classList.add(activeStock.filterClass);
   }
+
+  if (grainLayer) {
+    grainLayer.className = `film-grain-layer ${activeStock.grainClass || 'grain-medium'}`;
+  }
   
   if (stockNameBadge) stockNameBadge.textContent = activeStock.name;
   if (splitTag) splitTag.textContent = activeStock.name;
   if (isoBadge) isoBadge.textContent = `ISO ${activeStock.iso}`;
+  if (grainBadge) grainBadge.textContent = isGrainOn ? `Grain: ${activeStock.grainLabel}` : 'Grain: OFF';
   if (descNote) descNote.textContent = activeStock.descriptionNote;
   
   if (dateStamp) {
@@ -511,7 +543,10 @@ function updateViewfinderState() {
   }
   
   if (container) {
-    container.className = `viewfinder-box relative transition-all duration-300 ${isLeakOn ? 'leak-active' : ''}`;
+    let classes = 'viewfinder-box relative transition-all duration-300';
+    if (isLeakOn) classes += ' leak-active';
+    if (isGrainOn) classes += ' grain-active';
+    container.className = classes;
   }
 }
 
@@ -540,6 +575,20 @@ function setAspectRatio(aspect) {
 }
 
 // Toggle Viewfinder FX
+function toggleGrain() {
+  isGrainOn = !isGrainOn;
+  const btn = document.getElementById('btn-toggle-grain');
+  if (btn) {
+    btn.classList.toggle('bg-amber-500', isGrainOn);
+    btn.classList.toggle('text-black', isGrainOn);
+    btn.classList.toggle('font-bold', isGrainOn);
+    btn.classList.toggle('bg-amber-500/10', !isGrainOn);
+    btn.classList.toggle('text-amber-400', !isGrainOn);
+    btn.textContent = isGrainOn ? 'GRAIN ON' : 'GRAIN OFF';
+  }
+  updateViewfinderState();
+}
+
 function toggleLeak() {
   isLeakOn = !isLeakOn;
   const btn = document.getElementById('btn-toggle-leak');

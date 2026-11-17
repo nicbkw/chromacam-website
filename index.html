@@ -111,6 +111,7 @@
                   <button type="button" onclick="setAspectRatio('9:16')" class="aspect-btn px-2 py-0.5 rounded border border-gray-700 text-gray-400 hover:text-white" data-aspect="9:16">9:16</button>
                   <button type="button" onclick="setAspectRatio('1:1')" class="aspect-btn px-2 py-0.5 rounded border border-gray-700 text-gray-400 hover:text-white" data-aspect="1:1">1:1</button>
                 </div>
+                <button type="button" id="btn-toggle-grain" onclick="toggleGrain()" class="px-2 py-0.5 rounded border border-amber-500 text-black bg-amber-500 font-bold transition-colors">GRAIN ON</button>
                 <button type="button" id="btn-toggle-leak" onclick="toggleLeak()" class="px-2 py-0.5 rounded border border-gray-700 text-gray-300 hover:border-amber-500 transition-colors">LEAK</button>
                 <button type="button" id="btn-toggle-date" onclick="toggleDate()" class="px-2 py-0.5 rounded border border-gray-700 text-amber-400 bg-amber-500/10 hover:border-amber-500 transition-colors">'98 DATE</button>
               </div>
@@ -122,6 +123,7 @@
                 <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
                 <span class="text-amber-500 font-bold" id="vf-stock-name">Amber Gold 200</span>
                 <span class="px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/30" id="vf-iso">ISO 200</span>
+                <span class="px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/30 font-mono text-[11px]" id="vf-grain-tag">Grain: 14% Silver Halide</span>
               </div>
               <span class="text-gray-400 text-[11px] hidden sm:inline">DRAG SLIDER TO COMPARE ORIGINAL VS EMULATION</span>
             </div>
@@ -134,6 +136,9 @@
                 <div id="split-slider-layout" class="absolute inset-0 overflow-hidden">
                   <!-- Base Layer: Emulated Image -->
                   <img id="img-emulated-split" class="comparison-preview-img filter-amber-gold-200 transition-all duration-500 absolute inset-0 select-none" src="images/french-village.jpg" alt="Film Emulation Photo Preview">
+                  
+                  <!-- Dedicated Silver Halide Film Grain Synthesizer Layer -->
+                  <div id="emulated-grain-layer" class="film-grain-layer grain-medium"></div>
                   
                   <!-- Clipped Overlay Layer: Original Image -->
                   <div id="split-clip-wrapper" class="absolute inset-0 overflow-hidden pointer-events-none" style="clip-path: inset(0 50% 0 0);">
@@ -268,11 +273,11 @@
           <div class="w-12 h-12 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-500 mb-6">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path></svg>
           </div>
-          <h3 class="text-xl font-bold text-white mb-3 font-serif">PRO Manual Controls</h3>
+          <h3 class="text-xl font-bold text-white mb-3 font-serif">Silver Halide Grain Synthesizer</h3>
           <p class="text-gray-400 text-sm leading-relaxed mb-4">
-            Unrestricted manual override for ISO (50–3200), Shutter Speed (1/30s–1/2000s), Aperture (f/1.4–f/16), Exposure Bias (-2.0 to +2.0 EV), and Grain Density (OFF–30%).
+            Simulates organic silver halide film grain structure using procedural Gaussian luminance noise (<code class="text-amber-400">GrainGenerator.hpp</code>). Grain density and particle clump size scale dynamically per stock ISO (50–3200).
           </p>
-          <span class="text-xs font-mono text-amber-500">Full Manual Latitude</span>
+          <span class="text-xs font-mono text-amber-500">`GrainGenerator.hpp` Organic Synthesis</span>
         </div>
 
         <!-- Function 4 -->
@@ -437,6 +442,6 @@
     </div>
   </footer>
 
-  <script src="js/app.js?v=1.0.3"></script>
+  <script src="js/app.js?v=1.0.4"></script>
 </body>
 </html>
